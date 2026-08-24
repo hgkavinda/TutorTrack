@@ -249,8 +249,8 @@ const Students = () => {
             </div>
 
             {showModal && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden animate-zoom-in max-h-[90vh] flex flex-col">
+                <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 p-4">
+                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden animate-zoom-in flex flex-col mx-auto my-8">
                         <div className="bg-blue-600 p-4 flex justify-between items-center text-white">
                             <h2 className="font-bold text-lg">Register New Student</h2>
                             <button onClick={() => setShowModal(false)} className="text-xl hover:text-blue-200">×</button>
