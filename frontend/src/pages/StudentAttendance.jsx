@@ -11,8 +11,8 @@ const monthLabel = (value) => {
     return new Date(year, month - 1).toLocaleString('en', { month: 'long', year: 'numeric' });
 };
 const statusClass = (status) => status === 'Present'
-    ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200'
-    : 'bg-rose-50 text-rose-700 ring-1 ring-rose-200';
+    ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/20'
+    : 'bg-rose-500/10 text-rose-300 border border-rose-500/20';
 
 const StudentAttendance = () => {
     const year = new Date().getFullYear();
@@ -46,25 +46,25 @@ const StudentAttendance = () => {
         <StudentPageHeader eyebrow="ඉගෙනුම් වාර්තාව" title="මගේ පැමිණීම · My Attendance" description="ඔබේ පැමිණීමේ සාරාංශය සහ පන්ති ඉතිහාසය." />
 
         {error && <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-red-700">{error}</div>}
-        {!data && !error && <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-500">Loading attendance...</div>}
+        {!data && !error && <div className="rounded-2xl border border-white/5 bg-white/5 p-8 text-center text-slate-400">Loading attendance...</div>}
 
         {data && <>
             <section className="app-card p-5 sm:p-6">
                 <div className="mb-4 flex items-center justify-between">
                     <div><h2 className="student-section-heading">මේ මාසය · This Month</h2><p className="student-section-copy">{monthLabel(currentMonth)} · {currentRecords.length} sessions</p></div>
-                    <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">All classes</span>
+                    <span className="rounded-full bg-white/10 border border-white/5 px-3 py-1 text-xs font-semibold text-slate-300">All classes</span>
                 </div>
                 <div className="flex items-center gap-5">
                     <div className="relative h-28 w-28 shrink-0">
                         <svg className="h-28 w-28 -rotate-90" viewBox="0 0 112 112" aria-hidden="true">
-                            <circle cx="56" cy="56" r="44" fill="none" stroke="#e2e8f0" strokeWidth="10" />
-                            <circle cx="56" cy="56" r="44" fill="none" stroke="#2563eb" strokeWidth="10" strokeLinecap="round" strokeDasharray="276.5" strokeDashoffset={276.5 * (1 - currentRate / 100)} />
+                            <circle cx="56" cy="56" r="44" fill="none" stroke="rgba(255, 255, 255, 0.08)" strokeWidth="10" />
+                            <circle cx="56" cy="56" r="44" fill="none" stroke="#22d3ee" strokeWidth="10" strokeLinecap="round" strokeDasharray="276.5" strokeDashoffset={276.5 * (1 - currentRate / 100)} className="drop-shadow-[0_0_4px_rgba(34,211,238,0.5)]" />
                         </svg>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center"><span className="text-2xl font-bold text-slate-900">{currentRate}%</span><span className="text-[10px] font-medium text-slate-500">Attendance</span></div>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center"><span className="text-2xl font-extrabold text-white">{currentRate}%</span><span className="text-[10px] font-medium text-slate-400">Attendance</span></div>
                     </div>
                     <div className="grid min-w-0 flex-1 grid-cols-2 gap-2">
-                        <div className="rounded-xl bg-emerald-50 p-3 text-emerald-700"><p className="text-xs font-medium">Present</p><p className="mt-1 text-2xl font-bold">{currentPresent}</p></div>
-                        <div className="rounded-xl bg-rose-50 p-3 text-rose-700"><p className="text-xs font-medium">Absent</p><p className="mt-1 text-2xl font-bold">{currentAbsent}</p></div>
+                        <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/15 p-3 text-emerald-300"><p className="text-xs font-medium">Present</p><p className="mt-1 text-2xl font-extrabold text-white">{currentPresent}</p></div>
+                        <div className="rounded-xl bg-rose-500/10 border border-rose-500/15 p-3 text-rose-300"><p className="text-xs font-medium">Absent</p><p className="mt-1 text-2xl font-extrabold text-white">{currentAbsent}</p></div>
                     </div>
                 </div>
             </section>
@@ -75,7 +75,7 @@ const StudentAttendance = () => {
                 <div className="grid grid-cols-2 gap-2" aria-label={activeClass ? `Classes. Selected ${activeClass.className}` : 'Classes'}>
                     {data.enrolledClasses.map((classItem) => {
                         const active = String(classItem._id) === String(activeClassId);
-                        return <button key={classItem._id} onClick={() => setSelectedClass(classItem._id)} className={`w-full rounded-xl border px-3 py-3 text-left transition ${active ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-200 bg-white text-slate-700'}`}><p className="text-sm font-semibold leading-snug">{classItem.className}</p><p className={`mt-1 text-xs ${active ? 'text-blue-100' : 'text-slate-500'}`}>{classItem.location || `Grade ${classItem.grade}`}</p><p className={`mt-1 text-xs ${active ? 'text-blue-100' : 'text-slate-500'}`}>{classItem.day}{classItem.startTime ? ` · ${classItem.startTime}` : ''}</p></button>;
+                        return <button key={classItem._id} onClick={() => setSelectedClass(classItem._id)} className={`w-full rounded-xl border px-3 py-3 text-left transition ${active ? 'border-cyan-500 bg-cyan-500/20 text-white' : 'border-white/10 bg-white/5 text-slate-300'}`}><p className="text-sm font-semibold leading-snug">{classItem.className}</p><p className={`mt-1 text-xs ${active ? 'text-cyan-200' : 'text-slate-400'}`}>{classItem.location || `Grade ${classItem.grade}`}</p><p className={`mt-1 text-xs ${active ? 'text-cyan-200' : 'text-slate-400'}`}>{classItem.day}{classItem.startTime ? ` · ${classItem.startTime}` : ''}</p></button>;
                     })}
                 </div>
 
@@ -84,17 +84,17 @@ const StudentAttendance = () => {
                         const records = recordsByMonth[month] || [];
                         const present = records.filter((record) => record.status === 'Present').length;
                         return <section key={month}>
-                            <div className="mb-2 flex items-center justify-between px-1"><h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500">{monthLabel(month)}</h3>{records.length > 0 && <span className="text-xs font-normal text-slate-500">{present}/{records.length} present</span>}</div>
-                            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_2px_8px_rgba(15,23,42,0.025)]">
-                                {records.length ? <div className="divide-y divide-slate-100">{records.sort((a, b) => new Date(b.date) - new Date(a.date)).map((record) => {
+                            <div className="mb-2 flex items-center justify-between px-1"><h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400">{monthLabel(month)}</h3>{records.length > 0 && <span className="text-xs font-normal text-slate-400">{present}/{records.length} present</span>}</div>
+                            <div className="overflow-hidden rounded-2xl border border-white/5 bg-white/5 divide-y divide-white/5 shadow-md">
+                                {records.length ? <div className="divide-y divide-white/5">{records.sort((a, b) => new Date(b.date) - new Date(a.date)).map((record) => {
                                     const recordDate = new Date(record.date);
-                                    return <div key={record._id} className="flex items-center justify-between gap-3 p-4"><div className="flex min-w-0 items-center gap-3"><div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-xl bg-slate-100"><span className="text-[10px] font-semibold uppercase text-slate-500">{recordDate.toLocaleString('en', { month: 'short' })}</span><span className="text-lg font-bold leading-5 text-slate-900">{recordDate.getDate()}</span></div><div className="min-w-0"><p className="font-semibold text-slate-800">{recordDate.toLocaleDateString('en', { weekday: 'long' })}</p><p className="text-xs text-slate-500">Scheduled class</p>{record.note && <p className="mt-1 text-xs text-slate-500">{record.note}</p>}</div></div><span className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold ${statusClass(record.status)}`}>{record.status}</span></div>;
-                                })}</div> : <div className="p-6 text-center text-sm text-slate-500">No completed classes recorded this month.</div>}
+                                    return <div key={record._id} className="flex items-center justify-between gap-3 p-4"><div className="flex min-w-0 items-center gap-3"><div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-xl border border-white/5 bg-white/5"><span className="text-[10px] font-semibold uppercase text-slate-400">{recordDate.toLocaleString('en', { month: 'short' })}</span><span className="text-lg font-extrabold leading-5 text-white">{recordDate.getDate()}</span></div><div className="min-w-0"><p className="font-bold text-slate-100">{recordDate.toLocaleDateString('en', { weekday: 'long' })}</p><p className="text-xs text-slate-400">Scheduled class</p>{record.note && <p className="mt-1 text-xs text-slate-400">{record.note}</p>}</div></div><span className={`shrink-0 rounded-full border px-3 py-1.5 text-xs font-bold ${statusClass(record.status)}`}>{record.status}</span></div>;
+                                })}</div> : <div className="p-6 text-center text-sm text-slate-400">No completed classes recorded this month.</div>}
                             </div>
                         </section>;
                     })}
                 </div>
-                {!data.enrolledClasses.length && <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-500">You are not enrolled in an active class.</div>}
+                {!data.enrolledClasses.length && <div className="rounded-2xl border border-white/5 bg-white/5 p-8 text-center text-slate-400">You are not enrolled in an active class.</div>}
             </section>
         </>}
     </div>;

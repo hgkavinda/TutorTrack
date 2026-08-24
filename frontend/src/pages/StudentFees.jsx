@@ -50,7 +50,7 @@ const StudentFees = () => {
         </StudentPageHeader>
 
         {error && <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-red-700">{error}</div>}
-        {!data && !error && <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-slate-500">Loading class fees...</div>}
+        {!data && !error && <div className="rounded-2xl border border-white/5 bg-white/5 p-8 text-center text-slate-400">Loading class fees...</div>}
 
         {data && <>
             <section className="space-y-3">
@@ -58,33 +58,33 @@ const StudentFees = () => {
                 {due.length ? due.map((invoice) => {
                     const progress = invoice.paymentProgress;
                     const reached = progress.sessionsRemaining === 0;
-                    return <div key={invoice._id} className={`rounded-2xl border p-5 shadow-[0_2px_8px_rgba(15,23,42,0.025)] ${reached ? 'border-rose-200 bg-rose-50' : 'border-slate-200 bg-white'}`}>
+                    return <div key={invoice._id} className={`rounded-2xl border p-5 shadow-[0_8px_32px_rgba(0,0,0,0.2)] ${reached ? 'border-rose-500/25 bg-rose-950/20' : 'border-white/10 bg-white/5'}`}>
                         <div className="flex items-start justify-between gap-3">
-                            <div><p className="text-xs font-semibold uppercase tracking-wider text-slate-500">{reached ? 'Payment due' : 'Upcoming payment'}</p><h3 className="mt-1 text-lg font-bold text-slate-900">{invoice.assignedClass?.className}</h3><p className="text-sm text-slate-500">{monthName(invoice.billingMonth)} | {invoice.assignedClass?.location || 'Location not set'}</p></div>
-                            <p className={`text-xl font-bold ${reached ? 'text-rose-700' : 'text-blue-600'}`}>{money(invoice.amount)}</p>
+                            <div><p className="text-xs font-semibold uppercase tracking-wider text-slate-400">{reached ? 'Payment due' : 'Upcoming payment'}</p><h3 className="mt-1 text-lg font-extrabold text-white">{invoice.assignedClass?.className}</h3><p className="text-sm text-slate-400">{monthName(invoice.billingMonth)} | {invoice.assignedClass?.location || 'Location not set'}</p></div>
+                            <p className={`text-xl font-extrabold ${reached ? 'text-rose-400' : 'text-cyan-400'}`}>{money(invoice.amount)}</p>
                         </div>
 
                         {progress.rule === 'AfterSessions' && <div className="mt-5">
-                            <div className="mb-2 flex justify-between text-xs font-semibold text-slate-600"><span>Classes completed</span><span>{Math.min(progress.completedSessions, progress.targetSessions)} of {progress.targetSessions}</span></div>
-                            <div className="h-2.5 overflow-hidden rounded-full bg-slate-200"><div className={`h-full rounded-full ${reached ? 'bg-rose-500' : 'bg-blue-600'}`} style={{ width: `${Math.min(100, (progress.completedSessions / progress.targetSessions) * 100)}%` }} /></div>
+                            <div className="mb-2 flex justify-between text-xs font-semibold text-slate-400"><span>Classes completed</span><span>{Math.min(progress.completedSessions, progress.targetSessions)} of {progress.targetSessions}</span></div>
+                            <div className="h-2.5 overflow-hidden rounded-full bg-white/5 border border-white/5"><div className={`h-full rounded-full bg-gradient-to-r ${reached ? 'from-rose-500 to-rose-400 shadow-[0_0_8px_rgba(244,63,94,0.5)]' : 'from-cyan-500 to-blue-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]'}`} style={{ width: `${Math.min(100, (progress.completedSessions / progress.targetSessions) * 100)}%` }} /></div>
                         </div>}
 
-                        <div className={`mt-4 rounded-xl p-3 text-sm font-semibold ${reached ? 'bg-rose-100 text-rose-800' : 'bg-blue-50 text-blue-700'}`}>
+                        <div className={`mt-4 rounded-xl p-3 text-sm font-bold border ${reached ? 'bg-rose-500/10 text-rose-300 border-rose-500/20' : 'bg-cyan-500/10 text-cyan-300 border-cyan-500/20'}`}>
                             <p>{dueMessage(invoice)}</p>
-                            {progress.nextClassDate && progress.sessionsRemaining > 0 && <p className="mt-1 text-xs font-normal">Next class: {dateText(progress.nextClassDate)}{invoice.assignedClass?.startTime ? ` at ${invoice.assignedClass.startTime}` : ''}</p>}
+                            {progress.nextClassDate && progress.sessionsRemaining > 0 && <p className="mt-1 text-xs font-medium text-slate-400">Next class: {dateText(progress.nextClassDate)}{invoice.assignedClass?.startTime ? ` at ${invoice.assignedClass.startTime}` : ''}</p>}
                         </div>
-                        {invoice.concessionType !== 'Full' && <p className="mt-3 text-xs text-blue-700">{invoice.concessionType} card applied{invoice.concessionReason ? ` | ${invoice.concessionReason}` : ''}</p>}
+                        {invoice.concessionType !== 'Full' && <p className="mt-3 text-xs text-cyan-400 font-semibold">{invoice.concessionType} card applied{invoice.concessionReason ? ` | ${invoice.concessionReason}` : ''}</p>}
                     </div>;
-                }) : <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-6 text-center"><div className="text-3xl font-bold text-emerald-700">OK</div><h3 className="mt-2 font-bold text-emerald-800">You are all paid up</h3><p className="mt-1 text-sm text-emerald-700">No class fees are currently waiting for payment.</p></div>}
+                }) : <div className="rounded-2xl border border-emerald-500/25 bg-emerald-500/10 p-6 text-center"><div className="text-3xl font-extrabold text-emerald-400">OK</div><h3 className="mt-2 font-bold text-white">You are all paid up</h3><p className="mt-1 text-sm text-emerald-300">No class fees are currently waiting for payment.</p></div>}
             </section>
 
             <section className="space-y-3">
                 <div><h2 className="student-section-heading student-section-heading--on-dark">ගෙවීම් ඉතිහාසය · Payment History</h2><p className="student-section-copy">Months already paid or covered by a free card.</p></div>
-                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white divide-y divide-slate-100">
+                <div className="overflow-hidden rounded-2xl border border-white/5 bg-white/5 divide-y divide-white/5 shadow-md">
                     {history.length ? history.map((invoice) => <div key={invoice._id} className="flex items-center justify-between gap-4 p-4">
-                        <div className="flex items-center gap-3"><span className={`flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold ${invoice.status === 'Paid' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700'}`}>{invoice.status === 'Paid' ? 'Paid' : 'Free'}</span><div><p className="font-bold text-slate-900">{monthName(invoice.billingMonth)}</p><p className="text-xs text-slate-500">{invoice.assignedClass?.className}{invoice.paymentDate ? ` | Paid ${dateText(invoice.paymentDate)}` : ' | Free card'}</p></div></div>
-                        <div className="text-right"><p className="font-bold text-slate-900">{invoice.status === 'Waived' ? 'Free' : money(invoice.paidAmount)}</p><p className="text-xs font-semibold text-emerald-700">{invoice.status}</p></div>
-                    </div>) : <div className="p-8 text-center text-slate-500">No payment history for {year}.</div>}
+                        <div className="flex items-center gap-3"><span className={`inline-flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold border ${invoice.status === 'Paid' ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/20' : 'bg-cyan-500/15 text-cyan-300 border-cyan-500/20'}`}>{invoice.status === 'Paid' ? 'Paid' : 'Free'}</span><div><p className="font-bold text-white">{monthName(invoice.billingMonth)}</p><p className="text-xs text-slate-400">{invoice.assignedClass?.className}{invoice.paymentDate ? ` | Paid ${dateText(invoice.paymentDate)}` : ' | Free card'}</p></div></div>
+                        <div className="text-right"><p className="font-extrabold text-white">{invoice.status === 'Waived' ? 'Free' : money(invoice.paidAmount)}</p><p className="text-xs font-bold text-emerald-400">{invoice.status}</p></div>
+                    </div>) : <div className="p-8 text-center text-slate-400">No payment history for {year}.</div>}
                 </div>
             </section>
         </>}
