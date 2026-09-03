@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api/client';
 import StudentPageHeader from '../components/StudentPageHeader';
+import TeacherHeroBanner from '../components/TeacherHeroBanner';
 
 const money = (value) => `Rs. ${Number(value || 0).toLocaleString()}`;
 
@@ -29,6 +30,7 @@ const StudentHome = () => {
 
     return (
         <div className="animate-fade-in space-y-6">
+            <TeacherHeroBanner />
             <StudentPageHeader title={`Welcome, ${data.student.fullName}`} description={`Student ID: ${data.student.studentId} · Grade: ${data.student.grade} · Academic Year: ${data.student.academicYear}`}>
                 <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-400">Active</div>
             </StudentPageHeader>
@@ -101,8 +103,8 @@ const StudentHome = () => {
  
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                 <section className="app-card p-5">
-                    <div className="flex items-center justify-between">
-                        <h2 className="student-section-heading">නවතම ප්‍රතිඵලය · Latest Result</h2>
+                    <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                        <h2 className="text-base font-bold text-cyan-400">නවතම ප්‍රතිඵලය · Latest Result</h2>
                         <Link to="/student/results" className="text-sm font-semibold text-cyan-400 hover:text-cyan-300">All Results</Link>
                     </div>
                     {latestResult ? (
@@ -121,7 +123,9 @@ const StudentHome = () => {
                 </section>
  
                 <section className="app-card p-5">
-                    <h2 className="student-section-heading">මගේ පන්ති · My Classes</h2>
+                    <div className="border-b border-white/10 pb-3">
+                        <h2 className="text-base font-bold text-cyan-400">මගේ පන්ති · My Classes</h2>
+                    </div>
                     <div className="mt-4 space-y-2">
                         {data.classes.length ? data.classes.map((classItem) => (
                             <div key={classItem._id} className="rounded-xl border border-white/5 bg-white/5 p-3">
@@ -134,7 +138,9 @@ const StudentHome = () => {
             </div>
  
             <section className="app-card p-5">
-                <h2 className="student-section-heading">දැනුම්දීම් · Latest Announcements</h2>
+                <div className="border-b border-white/10 pb-3">
+                    <h2 className="text-base font-bold text-cyan-400">දැනුම්දීම් · Latest Announcements</h2>
+                </div>
                 <div className="mt-4 space-y-3">
                     {data.announcements.length ? data.announcements.map((announcement) => (
                         <div key={announcement._id} className="rounded-xl border border-cyan-500/15 bg-cyan-950/20 p-3">

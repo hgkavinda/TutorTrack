@@ -42,7 +42,7 @@ const StudentFees = () => {
     const history = data?.invoices.filter((invoice) => invoice.status === 'Paid' || invoice.status === 'Waived') || [];
 
     return <div className="animate-fade-in space-y-6">
-        <StudentPageHeader eyebrow="ගෙවීම්" title="පන්ති ගෙවීම් · Class Fees" description="ඉදිරි ගෙවීම් සහ ඔබගේ payment history.">
+        <StudentPageHeader  title="පන්ති ගෙවීම් - Class Fees" description="ඉදිරි ගෙවීම් සහ ඔබගේ පසුගිය ගෙවීම්.">
             <div>
                 <label className="mb-1 block text-xs font-semibold text-slate-500">Year</label>
                 <input aria-label="Select year" type="number" min="2000" max="2100" value={year} onChange={(event) => setYear(event.target.value)} className="student-control w-24" />
@@ -53,8 +53,11 @@ const StudentFees = () => {
         {!data && !error && <div className="rounded-2xl border border-white/5 bg-white/5 p-8 text-center text-slate-400">Loading class fees...</div>}
 
         {data && <>
-            <section className="space-y-3">
-                <div><h2 className="student-section-heading student-section-heading--on-dark">ගෙවිය යුතු මුදල් · Payments</h2><p className="student-section-copy">What you need to pay and when.</p></div>
+            <section className="app-card p-5 sm:p-6 space-y-4">
+                <div className="border-b border-white/10 pb-4">
+                    <h2 className="text-lg font-bold text-cyan-400">මෙම මාසයට අදාල ගෙවීමට ඇති මුදල</h2>
+                    
+                </div>
                 {due.length ? due.map((invoice) => {
                     const progress = invoice.paymentProgress;
                     const reached = progress.sessionsRemaining === 0;
@@ -75,11 +78,14 @@ const StudentFees = () => {
                         </div>
                         {invoice.concessionType !== 'Full' && <p className="mt-3 text-xs text-cyan-400 font-semibold">{invoice.concessionType} card applied{invoice.concessionReason ? ` | ${invoice.concessionReason}` : ''}</p>}
                     </div>;
-                }) : <div className="rounded-2xl border border-emerald-500/25 bg-emerald-500/10 p-6 text-center"><div className="text-3xl font-extrabold text-emerald-400">OK</div><h3 className="mt-2 font-bold text-white">You are all paid up</h3><p className="mt-1 text-sm text-emerald-300">No class fees are currently waiting for payment.</p></div>}
+                }) : <div className="rounded-2xl border border-emerald-500/25 bg-emerald-500/10 p-6 text-center"><div className="text-3xl font-extrabold text-emerald-400">OK</div><h3 className="mt-2 font-bold text-white">පන්ති ගාස්තු ගෙවා ඇත.</h3><p className="mt-1 text-sm text-emerald-300">No class fees are currently waiting for payment.</p></div>}
             </section>
 
-            <section className="space-y-3">
-                <div><h2 className="student-section-heading student-section-heading--on-dark">ගෙවීම් ඉතිහාසය · Payment History</h2><p className="student-section-copy">Months already paid or covered by a free card.</p></div>
+            <section className="app-card p-5 sm:p-6 space-y-4">
+                <div className="border-b border-white/10 pb-4">
+                    <h2 className="text-lg font-bold text-cyan-400">පසුගිය ගෙවීම් </h2>
+                    <p className="student-section-copy mt-1">Months already paid or covered by a free card.</p>
+                </div>
                 <div className="overflow-hidden rounded-2xl border border-white/5 bg-white/5 divide-y divide-white/5 shadow-md">
                     {history.length ? history.map((invoice) => <div key={invoice._id} className="flex items-center justify-between gap-4 p-4">
                         <div className="flex items-center gap-3"><span className={`inline-flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold border ${invoice.status === 'Paid' ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/20' : 'bg-cyan-500/15 text-cyan-300 border-cyan-500/20'}`}>{invoice.status === 'Paid' ? 'Paid' : 'Free'}</span><div><p className="font-bold text-white">{monthName(invoice.billingMonth)}</p><p className="text-xs text-slate-400">{invoice.assignedClass?.className}{invoice.paymentDate ? ` | Paid ${dateText(invoice.paymentDate)}` : ' | Free card'}</p></div></div>
