@@ -46,8 +46,16 @@ const Layout = () => {
                 </nav>
                 <div className="border-t border-slate-200 p-4">
                     <NavLink to="/profile" className="flex items-center gap-3 rounded-xl px-2 py-2 hover:bg-blue-50">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-700">
-                            {user?.name?.charAt(0) || 'T'}
+                        <div className="relative h-9 w-9 flex-shrink-0">
+                            <img
+                                src="/teacher-photo.jpg"
+                                alt={user?.name}
+                                className="h-9 w-9 rounded-full object-cover object-top border-2 border-blue-200 shadow-sm"
+                                onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
+                            />
+                            <div style={{ display: 'none' }} className="absolute inset-0 flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-700">
+                                {user?.name?.charAt(0) || 'T'}
+                            </div>
                         </div>
                         <div className="min-w-0 text-sm">
                             <p className="truncate font-bold">{user?.name}</p>
@@ -62,7 +70,15 @@ const Layout = () => {
                     <div className="flex items-center gap-2 text-xl font-extrabold text-slate-900 md:hidden"><span className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 text-base text-white">T</span>TutorTrack</div>
 
                     <div className="flex items-center gap-4">
-                        <div className="hidden font-medium text-slate-600 md:block">Welcome, {user?.name}</div>
+                        <div className="hidden items-center gap-3 md:flex">
+                            <img
+                                src="/teacher-photo.jpg"
+                                alt={user?.name}
+                                className="h-9 w-9 rounded-full object-cover object-top border-2 border-blue-200 shadow-sm"
+                                onError={(e) => { e.target.style.display = 'none'; }}
+                            />
+                            <span className="font-medium text-slate-600">Welcome, {user?.name}</span>
+                        </div>
                         <button
                             onClick={handleLogout}
                             className="hidden items-center gap-2 rounded-xl border border-red-100 bg-red-50 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-100 md:flex"
