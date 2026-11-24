@@ -45,6 +45,20 @@ exports.getDashboardStats = asyncHandler(async (req, res, next) => {
     const currentDay = days[new Date().getDay()];
     const todaysClasses = await Class.find({ day: currentDay, status: 'active' });
 
+    // Monthly Fee Revenue Summary
+    const currentYearMonth = new Date().toISOString().slice(0, 7);
+    const monthlyFees = await Payment.find({
+        billingMonth: { $regex: `^${currentYearMonth}` }
+    });
+    const monthlyRevenue = monthlyFees.reduce((acc, f) => {
+        acc.total += f.amount || 0;
+        acc.collected += f.paidAmount || 0;
+        acc.outstanding += f.balance || 0;
+        return acc;
+    }, { total: 0, collected: 0, outstanding: 0 });
+
+    const upcomingClasses = await Class.find({ status: 'active' }).limit(4);
+
     res.status(200).json({
         success: true,
         data: {
@@ -53,6 +67,8 @@ exports.getDashboardStats = asyncHandler(async (req, res, next) => {
             pendingFeesCount,
             todaysClassesCount: todaysClasses.length,
             todaysClasses,
+            upcomingClasses,
+            monthlyRevenue,
             recentStudents,
             recentAnnouncements,
         },

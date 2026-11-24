@@ -82,11 +82,14 @@ const Announcements = () => {
             </div>
 
             {showModal && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col">
-                        <div className="flex items-center justify-between bg-blue-600 p-4 text-white">
-                            <h2 className="font-bold text-lg">Broadcast Announcement</h2>
-                            <button onClick={() => setShowModal(false)} className="text-xl hover:text-green-200">×</button>
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-200">
+                        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+                            <div>
+                                <h2 className="font-bold text-base text-slate-900">Broadcast Announcement</h2>
+                                <p className="text-xs text-slate-500 mt-0.5">Post an update or notice to students.</p>
+                            </div>
+                            <button onClick={() => setShowModal(false)} className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition font-bold">✕</button>
                         </div>
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
                             <div>

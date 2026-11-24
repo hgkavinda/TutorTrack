@@ -165,85 +165,239 @@ const Classes = () => {
             </div>
 
             {showModal && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden animate-zoom-in">
-                        <div className="bg-blue-600 p-4 flex justify-between items-center text-white">
-                            <h2 className="font-bold text-lg">{editingClass ? 'Edit Class Details' : 'Create New Class'}</h2>
-                            <button onClick={() => setShowModal(false)} className="text-xl hover:text-blue-200">×</button>
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden border border-slate-200">
+                        {/* Header */}
+                        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+                            <div>
+                                <h2 className="text-base font-bold text-slate-900">
+                                    {editingClass ? 'Edit Class Details' : 'Create New Class'}
+                                </h2>
+                                <p className="text-xs text-slate-500 mt-0.5">
+                                    {editingClass ? 'Update class schedule and fee parameters' : 'Set up a new tuition batch, schedule and fees'}
+                                </p>
+                            </div>
+                            <button
+                                onClick={() => setShowModal(false)}
+                                className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition font-bold"
+                            >
+                                ✕
+                            </button>
                         </div>
-                        <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                            {formError && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg p-3 text-sm">{formError}</div>}
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="col-span-2">
-                                    <label className="block text-xs font-medium text-gray-700 mb-1">Class Name</label>
-                                    <input type="text" required value={formData.className} onChange={e => setFormData({ ...formData, className: e.target.value })} className="w-full border rounded-lg p-2 text-sm focus:ring-2 outline-none focus:ring-blue-500" />
-                                </div>
-                                <div className="col-span-2">
-                                    <label className="block text-xs font-medium text-gray-700 mb-1">Location</label>
-                                    <input type="text" required value={formData.location} onChange={e => setFormData({ ...formData, location: e.target.value })} placeholder="e.g. Kandy Main Branch" className="w-full border rounded-lg p-2 text-sm focus:ring-2 outline-none focus:ring-blue-500" />
-                                </div>
-                                <div className="col-span-2">
-                                    <label className="block text-xs font-medium text-gray-700 mb-1">Contact Number</label>
-                                    <input type="tel" required value={formData.contactNumber} onChange={e => setFormData({ ...formData, contactNumber: e.target.value })} placeholder="e.g. 077 123 4567" className="w-full border rounded-lg p-2 text-sm focus:ring-2 outline-none focus:ring-blue-500" />
-                                </div>
+
+                        {/* Scrollable Form Body */}
+                        <div className="overflow-y-auto p-6 flex-1">
+                            <form id="classForm" onSubmit={handleSubmit} className="space-y-4">
+                                {formError && (
+                                    <div className="bg-rose-50 border border-rose-200 text-rose-700 rounded-xl p-3 text-xs font-semibold">
+                                        {formError}
+                                    </div>
+                                )}
+
                                 <div>
-                                    <label className="block text-xs font-medium text-gray-700 mb-1">Subject</label>
-                                    <input type="text" required value={formData.subject} onChange={e => setFormData({ ...formData, subject: e.target.value })} className="w-full border rounded-lg p-2 text-sm focus:ring-2 outline-none focus:ring-blue-500" />
+                                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                        Class Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        required
+                                        value={formData.className}
+                                        onChange={e => setFormData({ ...formData, className: e.target.value })}
+                                        placeholder="e.g. Grade 10 Mathematics Theory"
+                                        className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                                    />
                                 </div>
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-700 mb-1">Grade</label>
-                                    <select required disabled={editingClass?.studentCount > 0} value={formData.grade} onChange={e => setFormData({ ...formData, grade: e.target.value })} className="w-full border disabled:bg-gray-100 rounded-lg p-2 text-sm focus:ring-2 outline-none focus:ring-blue-500">
-                                        {grades.map(grade => <option key={grade} value={grade}>Grade {grade}</option>)}
-                                    </select>
-                                    {editingClass?.studentCount > 0 && <p className="text-xs text-amber-600 mt-1">End active enrollments before changing the grade.</p>}
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Location / Branch
+                                        </label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={formData.location}
+                                            onChange={e => setFormData({ ...formData, location: e.target.value })}
+                                            placeholder="e.g. Main Auditorium"
+                                            className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Contact Number
+                                        </label>
+                                        <input
+                                            type="tel"
+                                            required
+                                            value={formData.contactNumber}
+                                            onChange={e => setFormData({ ...formData, contactNumber: e.target.value })}
+                                            placeholder="e.g. 077 123 4567"
+                                            className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                                        />
+                                    </div>
                                 </div>
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-700 mb-1">Day</label>
-                                    <select value={formData.day} onChange={e => setFormData({ ...formData, day: e.target.value })} className="w-full border rounded-lg p-2 text-sm focus:ring-2 outline-none py-2.5">
-                                        {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(d => <option key={d} value={d}>{d}</option>)}
-                                    </select>
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Subject
+                                        </label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={formData.subject}
+                                            onChange={e => setFormData({ ...formData, subject: e.target.value })}
+                                            className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Grade
+                                        </label>
+                                        <select
+                                            required
+                                            disabled={editingClass?.studentCount > 0}
+                                            value={formData.grade}
+                                            onChange={e => setFormData({ ...formData, grade: e.target.value })}
+                                            className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20 bg-white disabled:bg-slate-100"
+                                        >
+                                            {grades.map(grade => (
+                                                <option key={grade} value={grade}>Grade {grade}</option>
+                                            ))}
+                                        </select>
+                                        {editingClass?.studentCount > 0 && (
+                                            <p className="text-[11px] text-amber-600 mt-1">End active enrollments before changing grade.</p>
+                                        )}
+                                    </div>
                                 </div>
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-700 mb-1">Monthly Fee (Rs.) <span className="text-gray-400">(optional)</span></label>
-                                    <input type="number" min="0" value={formData.monthlyFee} onChange={e => setFormData({ ...formData, monthlyFee: e.target.value })} className="w-full border rounded-lg p-2 text-sm focus:ring-2 outline-none focus:ring-blue-500" />
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Day of Week
+                                        </label>
+                                        <select
+                                            value={formData.day}
+                                            onChange={e => setFormData({ ...formData, day: e.target.value })}
+                                            className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20 bg-white"
+                                        >
+                                            {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(d => (
+                                                <option key={d} value={d}>{d}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Monthly Fee (Rs.)
+                                        </label>
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            value={formData.monthlyFee}
+                                            onChange={e => setFormData({ ...formData, monthlyFee: e.target.value })}
+                                            placeholder="e.g. 2500"
+                                            className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                                        />
+                                    </div>
                                 </div>
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-700 mb-1">Fee becomes due</label>
-                                    <select value={formData.feeDueRule} onChange={e => setFormData({ ...formData, feeDueRule: e.target.value })} className="w-full border rounded-lg p-2 text-sm">
-                                        <option value="AfterSessions">After completed classes</option>
-                                        <option value="FixedDay">Fixed day of month</option>
-                                        <option value="MonthStart">At the beginning of month</option>
-                                    </select>
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Fee Rule
+                                        </label>
+                                        <select
+                                            value={formData.feeDueRule}
+                                            onChange={e => setFormData({ ...formData, feeDueRule: e.target.value })}
+                                            className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20 bg-white"
+                                        >
+                                            <option value="AfterSessions">After completed classes</option>
+                                            <option value="FixedDay">Fixed day of month</option>
+                                            <option value="MonthStart">At beginning of month</option>
+                                        </select>
+                                    </div>
+
+                                    {formData.feeDueRule === 'AfterSessions' && (
+                                        <div>
+                                            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                                Completed Classes
+                                            </label>
+                                            <input
+                                                type="number"
+                                                min="1"
+                                                max="12"
+                                                value={formData.feeDueAfterSessions}
+                                                onChange={e => setFormData({ ...formData, feeDueAfterSessions: e.target.value })}
+                                                className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                                            />
+                                        </div>
+                                    )}
+
+                                    {formData.feeDueRule === 'FixedDay' && (
+                                        <div>
+                                            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                                Due Day (1–28)
+                                            </label>
+                                            <input
+                                                type="number"
+                                                min="1"
+                                                max="28"
+                                                value={formData.feeDueDay}
+                                                onChange={e => setFormData({ ...formData, feeDueDay: e.target.value })}
+                                                className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                                            />
+                                        </div>
+                                    )}
                                 </div>
-                                {formData.feeDueRule === 'AfterSessions' && <div>
-                                    <label className="block text-xs font-medium text-gray-700 mb-1">Completed classes</label>
-                                    <input type="number" min="1" max="12" value={formData.feeDueAfterSessions} onChange={e => setFormData({ ...formData, feeDueAfterSessions: e.target.value })} className="w-full border rounded-lg p-2 text-sm" />
-                                </div>}
-                                {formData.feeDueRule === 'FixedDay' && <div>
-                                    <label className="block text-xs font-medium text-gray-700 mb-1">Due day (1–28)</label>
-                                    <input type="number" min="1" max="28" value={formData.feeDueDay} onChange={e => setFormData({ ...formData, feeDueDay: e.target.value })} className="w-full border rounded-lg p-2 text-sm" />
-                                </div>}
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-700 mb-1">Start Time <span className="text-gray-400">(optional)</span></label>
-                                    <input type="time" value={formData.startTime} onChange={e => setFormData({ ...formData, startTime: e.target.value })} className="w-full border rounded-lg p-2 text-sm focus:ring-2 outline-none focus:ring-blue-500" />
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Start Time
+                                        </label>
+                                        <input
+                                            type="time"
+                                            value={formData.startTime}
+                                            onChange={e => setFormData({ ...formData, startTime: e.target.value })}
+                                            className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            End Time
+                                        </label>
+                                        <input
+                                            type="time"
+                                            value={formData.endTime}
+                                            onChange={e => setFormData({ ...formData, endTime: e.target.value })}
+                                            className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                                        />
+                                    </div>
                                 </div>
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-700 mb-1">End Time <span className="text-gray-400">(optional)</span></label>
-                                    <input type="time" value={formData.endTime} onChange={e => setFormData({ ...formData, endTime: e.target.value })} className="w-full border rounded-lg p-2 text-sm focus:ring-2 outline-none focus:ring-blue-500" />
-                                </div>
-                                {editingClass && <div>
-                                    <label className="block text-xs font-medium text-gray-700 mb-1">Status</label>
-                                    <select value={formData.status} onChange={e => setFormData({ ...formData, status: e.target.value })} className="w-full border rounded-lg p-2 text-sm">
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                    </select>
-                                </div>}
-                            </div>
-                            <div className="flex justify-end space-x-3 pt-4 border-t">
-                                <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium">Cancel</button>
-                                <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700">{editingClass ? 'Update Class' : 'Save Class'}</button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
+
+                        {/* Footer */}
+                        <div className="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50 px-6 py-4">
+                            <button
+                                type="button"
+                                onClick={() => setShowModal(false)}
+                                className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 transition"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                form="classForm"
+                                className="rounded-xl bg-blue-600 px-5 py-2 text-xs font-bold text-white shadow-sm hover:bg-blue-700 transition active:scale-95"
+                            >
+                                {editingClass ? 'Update Class' : 'Save Class'}
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

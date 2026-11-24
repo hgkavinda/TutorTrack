@@ -128,14 +128,14 @@ const StudentProfileModal = ({ studentId, classes, onClose, onUpdated, onCredent
     );
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-            <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[92vh] overflow-hidden flex flex-col">
-                <div className="bg-green-600 p-4 flex items-center justify-between text-white">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[92vh] overflow-hidden flex flex-col border border-slate-200">
+                <div className="border-b border-slate-100 p-5 flex items-center justify-between bg-white">
                     <div>
-                        <h2 className="font-bold text-lg">Student Profile</h2>
-                        {student && <p className="text-xs text-green-100">{student.studentId} · Grade {student.grade}</p>}
+                        <h2 className="font-bold text-base text-slate-900">Student Profile</h2>
+                        {student && <p className="text-xs text-slate-500 mt-0.5">{student.studentId} · Grade {student.grade} · {student.fullName}</p>}
                     </div>
-                    <button onClick={onClose} className="text-2xl hover:text-green-200">×</button>
+                    <button onClick={onClose} className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition font-bold">✕</button>
                 </div>
 
                 <div className="overflow-y-auto p-6 flex-1">

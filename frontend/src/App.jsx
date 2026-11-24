@@ -18,6 +18,7 @@ import StudentLayout from './components/StudentLayout';
 import StudentResults from './pages/StudentResults';
 import StudentAttendance from './pages/StudentAttendance';
 import StudentFees from './pages/StudentFees';
+import StudentProfile from './pages/StudentProfile';
 import Reports from './pages/Reports';
 import ClassDetails from './pages/ClassDetails';
 
@@ -70,6 +71,7 @@ function App() {
         <Route path="results" element={<StudentResults />} />
         <Route path="attendance" element={<StudentAttendance />} />
         <Route path="fees" element={<StudentFees />} />
+        <Route path="profile" element={<StudentProfile />} />
       </Route>
       <Route
         path="/student/change-password"

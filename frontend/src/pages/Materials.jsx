@@ -91,40 +91,67 @@ const Materials = () => {
             </div>
 
             {showModal && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col">
-                        <div className="flex items-center justify-between bg-blue-600 p-4 text-white">
-                            <h2 className="font-bold text-lg">Upload Material</h2>
-                            <button onClick={() => setShowModal(false)} className="text-xl hover:text-green-200">×</button>
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden border border-slate-200">
+                        {/* Header */}
+                        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+                            <div>
+                                <h2 className="text-base font-bold text-slate-900">Upload Learning Material</h2>
+                                <p className="text-xs text-slate-500 mt-0.5">Share notes, tutes, and study resources with your class.</p>
+                            </div>
+                            <button
+                                onClick={() => setShowModal(false)}
+                                className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition font-bold"
+                            >
+                                ✕
+                            </button>
                         </div>
-                        <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                            <div>
-                                <label className="block text-xs font-medium text-gray-700 mb-1">Title</label>
-                                <input type="text" required value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} className="w-full border rounded-lg p-2.5 text-sm focus:ring-green-500 outline-none focus:ring-2" />
-                            </div>
-                            <div>
-                                <label className="block text-xs font-medium text-gray-700 mb-1">Subject</label>
-                                <input type="text" required value={formData.subject} onChange={e => setFormData({ ...formData, subject: e.target.value })} className="w-full border rounded-lg p-2.5 text-sm focus:ring-green-500 outline-none focus:ring-2" />
-                            </div>
-                            <div>
-                                <label className="block text-xs font-medium text-gray-700 mb-1">Assign Class</label>
-                                <select required value={formData.assignedClass} onChange={e => setFormData({ ...formData, assignedClass: e.target.value })} className="w-full border rounded-lg p-2.5 text-sm focus:ring-green-500 outline-none focus:ring-2 bg-white">
-                                    {classesList.map(c => <option key={c._id} value={c._id}>{c.className}</option>)}
-                                </select>
-                            </div>
-                            <div>
-                                <label className="block text-xs font-medium text-gray-700 mb-1">File URL / Download Link</label>
-                                <input type="url" required value={formData.fileUrl} onChange={e => setFormData({ ...formData, fileUrl: e.target.value })} className="w-full border rounded-lg p-2.5 text-sm focus:ring-green-500 outline-none focus:ring-2" placeholder="https://" />
-                            </div>
-                            <div>
-                                <label className="block text-xs font-medium text-gray-700 mb-1">Description</label>
-                                <textarea required value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full border rounded-lg p-2.5 text-sm focus:ring-green-500 outline-none focus:ring-2" rows="3"></textarea>
-                            </div>
-                            <div className="flex justify-end pt-4 border-t space-x-3">
-                                <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 bg-gray-100 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-200">Cancel</button>
-                                <button type="submit" className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">Save</button>
-                            </div>
-                        </form>
+                        {/* Scrollable Form Body */}
+                        <div className="overflow-y-auto p-6 flex-1">
+                            <form id="materialForm" onSubmit={handleSubmit} className="space-y-4">
+                                <div>
+                                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Title</label>
+                                    <input type="text" required value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} placeholder="e.g. Combined Maths Integration Tute 01" className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20" />
+                                </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Subject</label>
+                                        <input type="text" required value={formData.subject} onChange={e => setFormData({ ...formData, subject: e.target.value })} placeholder="e.g. Combined Mathematics" className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Assign Class</label>
+                                        <select required value={formData.assignedClass} onChange={e => setFormData({ ...formData, assignedClass: e.target.value })} className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20 bg-white">
+                                            {classesList.map(c => <option key={c._id} value={c._id}>{c.className}</option>)}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">File URL / Download Link</label>
+                                    <input type="url" required value={formData.fileUrl} onChange={e => setFormData({ ...formData, fileUrl: e.target.value })} className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20" placeholder="https://drive.google.com/..." />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Description</label>
+                                    <textarea required value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20" rows="3" placeholder="Brief instructions or summary..."></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        {/* Footer */}
+                        <div className="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50 px-6 py-4">
+                            <button
+                                type="button"
+                                onClick={() => setShowModal(false)}
+                                className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 transition"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                form="materialForm"
+                                className="rounded-xl bg-blue-600 px-5 py-2 text-xs font-bold text-white shadow-sm hover:bg-blue-700 transition active:scale-95"
+                            >
+                                Save Material
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

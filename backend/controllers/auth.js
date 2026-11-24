@@ -62,19 +62,42 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 // @route   PUT /api/auth/change-password
 // @access  Private
 exports.updateDetails = asyncHandler(async (req, res, next) => {
-    const fieldsToUpdate = {
-        name: req.body.name,
-        email: req.body.email,
-    };
+    const teacher = await Teacher.findById(req.user.id).select('+password');
+    if (!teacher) {
+        return res.status(404).json({ success: false, error: 'Teacher not found' });
+    }
 
-    const user = await Teacher.findByIdAndUpdate(req.user.id, fieldsToUpdate, {
-        new: true,
-        runValidators: true,
-    });
+    if (req.body.name) teacher.name = req.body.name;
+    if (req.body.phoneNumber !== undefined) teacher.phoneNumber = req.body.phoneNumber;
+    if (req.body.profilePhoto !== undefined) teacher.profilePhoto = req.body.profilePhoto;
+
+    // If changing password
+    if (req.body.newPassword) {
+        if (!req.body.currentPassword) {
+            return res.status(400).json({ success: false, error: 'Please enter your current password' });
+        }
+        const isMatch = await teacher.matchPassword(req.body.currentPassword);
+        if (!isMatch) {
+            return res.status(401).json({ success: false, error: 'Current password is incorrect' });
+        }
+        if (req.body.newPassword.length < 6) {
+            return res.status(400).json({ success: false, error: 'New password must be at least 6 characters' });
+        }
+        teacher.password = req.body.newPassword;
+    }
+
+    await teacher.save();
 
     res.status(200).json({
         success: true,
-        data: user,
+        data: {
+            _id: teacher._id,
+            name: teacher.name,
+            email: teacher.email,
+            phoneNumber: teacher.phoneNumber,
+            profilePhoto: teacher.profilePhoto,
+        },
+        message: 'Profile updated successfully',
     });
 });
 

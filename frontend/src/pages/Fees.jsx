@@ -294,28 +294,50 @@ const Fees = () => {
             )}
 
             {arrearsStudent && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden">
-                        <div className="bg-blue-600 text-white p-4 flex justify-between">
-                            <div><h2 className="font-bold">Collect Previous Months</h2><p className="text-xs text-blue-100">{arrearsStudent.fullName} · {arrearsStudent.studentId}</p></div>
-                            <button onClick={() => setArrearsStudent(null)} className="text-xl">×</button>
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden border border-slate-200">
+                        {/* Header */}
+                        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+                            <div>
+                                <h2 className="text-base font-bold text-slate-900">Collect Previous Months (Arrears)</h2>
+                                <p className="text-xs text-slate-500 mt-0.5">{arrearsStudent.fullName} · {arrearsStudent.studentId}</p>
+                            </div>
+                            <button
+                                onClick={() => setArrearsStudent(null)}
+                                className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition font-bold"
+                            >
+                                ✕
+                            </button>
                         </div>
-                        <div className="p-5 max-h-[60vh] overflow-y-auto space-y-2">
+                        <div className="p-6 overflow-y-auto flex-1 space-y-2.5">
                             {arrears.map((invoice) => (
-                                <label key={invoice._id} className="flex items-center justify-between gap-4 border rounded-lg p-3 cursor-pointer hover:bg-blue-50">
+                                <label key={invoice._id} className="flex items-center justify-between gap-4 border border-slate-200 rounded-xl p-3.5 cursor-pointer hover:bg-blue-50/60 hover:border-blue-200 transition">
                                     <div className="flex items-center gap-3">
-                                        <input type="checkbox" checked={selectedArrears.includes(invoice._id)} onChange={() => setSelectedArrears((current) => current.includes(invoice._id) ? current.filter((id) => id !== invoice._id) : [...current, invoice._id])} className="w-5 h-5 accent-blue-600" />
-                                        <div><p className="font-semibold text-gray-800">{invoice.billingMonth} · {invoice.assignedClass?.className}</p><p className="text-xs text-gray-500">{invoice.concessionType} card</p></div>
+                                        <input type="checkbox" checked={selectedArrears.includes(invoice._id)} onChange={() => setSelectedArrears((current) => current.includes(invoice._id) ? current.filter((id) => id !== invoice._id) : [...current, invoice._id])} className="w-4 h-4 rounded text-blue-600 accent-blue-600" />
+                                        <div><p className="font-semibold text-sm text-slate-900">{invoice.billingMonth} · {invoice.assignedClass?.className}</p><p className="text-xs text-slate-500 capitalize">{invoice.concessionType} card</p></div>
                                     </div>
-                                    <p className="font-bold text-gray-800">{money(invoice.amount)}</p>
+                                    <p className="font-bold text-sm text-slate-900">{money(invoice.amount)}</p>
                                 </label>
                             ))}
                         </div>
-                        <div className="border-t bg-gray-50 p-4 flex items-center justify-between gap-4">
-                            <div><p className="text-xs text-gray-500">Selected Total</p><p className="font-bold">{money(arrears.filter((invoice) => selectedArrears.includes(invoice._id)).reduce((sum, invoice) => sum + invoice.amount, 0))}</p></div>
-                            <button onClick={() => collectInvoices(selectedArrears, true)} disabled={selectedArrears.length === 0 || saving} className="bg-blue-600 disabled:bg-gray-300 text-white px-4 py-2.5 rounded-lg text-sm font-bold">
-                                Collect & Create One Receipt
-                            </button>
+                        <div className="border-t border-slate-100 bg-slate-50 px-6 py-4 flex items-center justify-between gap-4">
+                            <div><p className="text-xs font-medium text-slate-500">Selected Total</p><p className="text-base font-bold text-slate-900">{money(arrears.filter((invoice) => selectedArrears.includes(invoice._id)).reduce((sum, invoice) => sum + invoice.amount, 0))}</p></div>
+                            <div className="flex items-center gap-3">
+                                <button
+                                    type="button"
+                                    onClick={() => setArrearsStudent(null)}
+                                    className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 transition"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    onClick={() => collectInvoices(selectedArrears, true)}
+                                    disabled={selectedArrears.length === 0 || saving}
+                                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white px-5 py-2 rounded-xl text-xs font-bold shadow-sm transition active:scale-95"
+                                >
+                                    Collect & Create One Receipt
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

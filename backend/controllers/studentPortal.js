@@ -1,4 +1,5 @@
 const asyncHandler = require('../middleware/asyncHandler');
+const Student = require('../models/Student');
 const Enrollment = require('../models/Enrollment');
 const StudentRating = require('../models/StudentRating');
 const Mark = require('../models/Mark');
@@ -144,6 +145,39 @@ exports.getDashboard = asyncHandler(async (req, res) => {
             attendance,
             announcements,
             fees: buildFeeSummary(feeInvoices),
+        },
+    });
+});
+
+exports.getNotifications = asyncHandler(async (req, res) => {
+    const enrollments = await getActiveEnrollments(req.student._id);
+    const classIds = enrollments.map((item) => item.assignedClass?._id).filter(Boolean);
+
+    const announcements = await Announcement.find({
+        $or: [
+            { targetClass: null },
+            { targetClass: { $in: classIds } },
+        ],
+    })
+        .populate('targetClass', 'className')
+        .sort('-createdAt')
+        .limit(10);
+
+    res.status(200).json({
+        success: true,
+        data: announcements,
+    });
+});
+
+exports.getProfile = asyncHandler(async (req, res) => {
+    const student = await Student.findById(req.student._id).select('-password');
+    const enrollments = await getActiveEnrollments(req.student._id);
+
+    res.status(200).json({
+        success: true,
+        data: {
+            student,
+            classes: enrollments.map((item) => item.assignedClass),
         },
     });
 });

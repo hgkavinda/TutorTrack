@@ -139,7 +139,7 @@ const Students = () => {
     if (loading) return <div className="p-4">Loading Students...</div>;
 
     return (
-        <div className="space-y-6 animate-fade-in">
+        <div className="space-y-6">
             <div className="app-card flex flex-col items-start justify-between gap-4 p-4 sm:flex-row sm:items-center sm:p-5">
                 <div><p className="page-eyebrow">ශිෂ්‍ය කළමනාකරණය</p><h1 className="page-title mt-1">Student Directory</h1></div>
 
@@ -249,126 +249,247 @@ const Students = () => {
             </div>
 
             {showModal && (
-                <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 p-4">
-                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden animate-zoom-in flex flex-col mx-auto my-8">
-                        <div className="bg-blue-600 p-4 flex justify-between items-center text-white">
-                            <h2 className="font-bold text-lg">Register New Student</h2>
-                            <button onClick={() => setShowModal(false)} className="text-xl hover:text-blue-200">×</button>
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden border border-slate-200">
+                        {/* Modal Header */}
+                        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+                            <div>
+                                <h2 className="text-base font-bold text-slate-900">Register New Student</h2>
+                                <p className="text-xs text-slate-500 mt-0.5">Enter student details and assign to tuition classes.</p>
+                            </div>
+                            <button
+                                onClick={() => setShowModal(false)}
+                                className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition text-lg font-bold"
+                            >
+                                ✕
+                            </button>
                         </div>
-                        <div className="overflow-y-auto p-6 flex-1">
+
+                        {/* Modal Body */}
+                        <div className="overflow-y-auto p-6 flex-1 space-y-4">
                             <form id="studentForm" onSubmit={handleSubmit} className="space-y-4">
-                                {formError && <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg p-3 text-sm">{formError}</div>}
+                                {formError && (
+                                    <div className="bg-rose-50 border border-rose-200 text-rose-700 rounded-xl p-3 text-xs font-semibold">
+                                        {formError}
+                                    </div>
+                                )}
+
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div className="col-span-1 md:col-span-2">
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">Full Name</label>
-                                        <input type="text" required value={formData.fullName} onChange={e => setFormData({ ...formData, fullName: e.target.value })} className="w-full border rounded-lg p-2.5 text-sm focus:ring-2 outline-none focus:ring-blue-500" />
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Full Name
+                                        </label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={formData.fullName}
+                                            onChange={e => setFormData({ ...formData, fullName: e.target.value })}
+                                            placeholder="e.g. Kasun Bandara"
+                                            className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                                        />
                                     </div>
+
                                     <div>
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">Student ID</label>
-                                        <input type="text" required value={formData.studentId} onChange={e => setFormData({ ...formData, studentId: e.target.value })} className="w-full border rounded-lg p-2.5 text-sm focus:ring-2 outline-none focus:ring-blue-500" />
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Student ID / Username
+                                        </label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={formData.studentId}
+                                            onChange={e => setFormData({ ...formData, studentId: e.target.value })}
+                                            placeholder="e.g. STU003"
+                                            className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                                        />
                                     </div>
+
                                     <div>
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">Gender <span className="text-gray-400">(optional)</span></label>
-                                        <select value={formData.gender} onChange={e => setFormData({ ...formData, gender: e.target.value })} className="w-full border rounded-lg p-2.5 text-sm focus:ring-2 outline-none py-3">
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Gender <span className="text-slate-400 font-normal lowercase">(optional)</span>
+                                        </label>
+                                        <select
+                                            value={formData.gender}
+                                            onChange={e => setFormData({ ...formData, gender: e.target.value })}
+                                            className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20 bg-white"
+                                        >
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                             <option value="Other">Other</option>
                                         </select>
                                     </div>
+
                                     <div>
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">Date of Birth <span className="text-gray-400">(optional)</span></label>
-                                        <input type="date" value={formData.dateOfBirth} onChange={e => setFormData({ ...formData, dateOfBirth: e.target.value })} className="w-full border rounded-lg p-2.5 text-sm focus:ring-2 outline-none focus:ring-blue-500" />
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Date of Birth <span className="text-slate-400 font-normal lowercase">(optional)</span>
+                                        </label>
+                                        <input
+                                            type="date"
+                                            value={formData.dateOfBirth}
+                                            onChange={e => setFormData({ ...formData, dateOfBirth: e.target.value })}
+                                            className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                                        />
                                     </div>
-                                    <div className="col-span-1 md:col-span-2 pt-2 border-t mt-2">
-                                        <h4 className="text-sm font-bold text-gray-600 mb-1">Academic Information</h4>
-                                        <p className="text-xs text-gray-500">The class controls attendance and fees. The grade is used for grade-wide performance ratings.</p>
-                                    </div>
+
                                     <div>
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">Academic Year</label>
-                                        <input type="number" min="2000" max="2100" required value={formData.academicYear} onChange={e => setFormData({ ...formData, academicYear: e.target.value })} className="w-full border rounded-lg p-2.5 text-sm focus:ring-2 outline-none focus:ring-blue-500" />
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Academic Year
+                                        </label>
+                                        <input
+                                            type="number"
+                                            min="2000"
+                                            max="2100"
+                                            required
+                                            value={formData.academicYear}
+                                            onChange={e => setFormData({ ...formData, academicYear: e.target.value })}
+                                            className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                                        />
                                     </div>
-                                    <div className="col-span-1 md:col-span-2">
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">Assign Class</label>
-                                        <div className="border rounded-lg p-3 space-y-2 max-h-48 overflow-y-auto">
+
+                                    <div className="col-span-1 md:col-span-2 pt-3 border-t border-slate-100">
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+                                            Assign Classes
+                                        </label>
+                                        <p className="text-xs text-slate-500 mb-2">Select the classes this student attends:</p>
+                                        <div className="border border-slate-200 rounded-xl p-2.5 space-y-1.5 max-h-44 overflow-y-auto bg-slate-50/50">
                                             {classesList.map((classItem) => {
                                                 const disabled = Boolean(formData.grade && formData.grade !== classItem.grade);
+                                                const isChecked = formData.assignedClasses.includes(classItem._id);
                                                 return (
-                                                    <label key={classItem._id} className={`flex items-start gap-3 rounded-lg p-2 ${disabled ? 'opacity-40 cursor-not-allowed' : 'hover:bg-blue-50 cursor-pointer'}`}>
-                                                        <input type="checkbox" checked={formData.assignedClasses.includes(classItem._id)} disabled={disabled} onChange={() => toggleClass(classItem._id)} className="mt-1 accent-blue-600" />
-                                                        <span>
-                                                            <span className="block text-sm font-semibold text-gray-800">{classItem.className}</span>
-                                                            <span className="block text-xs text-gray-500">Grade {classItem.grade} · {classItem.location || 'Location not set'} · {classItem.classId || 'No class ID'}</span>
-                                                        </span>
+                                                    <label
+                                                        key={classItem._id}
+                                                        className={`flex items-start gap-3 rounded-xl p-2.5 transition border ${
+                                                            isChecked
+                                                                ? 'border-blue-200 bg-blue-50/70 text-blue-900'
+                                                                : 'border-transparent bg-white hover:bg-slate-100/80 text-slate-800'
+                                                        } ${disabled ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'}`}
+                                                    >
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={isChecked}
+                                                            disabled={disabled}
+                                                            onChange={() => toggleClass(classItem._id)}
+                                                            className="mt-0.5 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                                                        />
+                                                        <div className="min-w-0 flex-1">
+                                                            <span className="block text-xs font-bold">{classItem.className}</span>
+                                                            <span className="block text-[11px] text-slate-500">
+                                                                Grade {classItem.grade} · {classItem.location || 'Main'} · Fee: Rs. {classItem.monthlyFee}
+                                                            </span>
+                                                        </div>
                                                     </label>
                                                 );
                                             })}
                                         </div>
-                                        {formData.assignedClasses.length === 0 && <p className="text-xs text-red-500 mt-1">Select at least one class.</p>}
+                                        {formData.assignedClasses.length === 0 && (
+                                            <p className="text-xs text-rose-500 mt-1 font-medium">Please select at least one class.</p>
+                                        )}
                                     </div>
-                                    <div className="col-span-1 md:col-span-2">
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">Assigned Grade</label>
-                                        <div className="w-full border rounded-lg p-2.5 text-sm bg-gray-50 text-gray-700">
-                                            {formData.grade ? `Grade ${formData.grade}` : 'Select a class to assign the grade automatically'}
-                                        </div>
+
+                                    <div className="col-span-1 md:col-span-2 pt-3 border-t border-slate-100">
+                                        <p className="text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                                            Guardian / Parent Details
+                                        </p>
                                     </div>
-                                    <div className="col-span-1 md:col-span-2 pt-2 border-t mt-2">
-                                        <h4 className="text-sm font-bold text-gray-600 mb-1">Additional Information <span className="font-normal text-gray-400">(optional)</span></h4>
-                                        <p className="text-xs text-gray-500">These details can be completed later from the student profile.</p>
-                                    </div>
+
                                     <div>
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">Parent/Guardian Name</label>
-                                        <input type="text" value={formData.parentName} onChange={e => setFormData({ ...formData, parentName: e.target.value })} className="w-full border rounded-lg p-2.5 text-sm focus:ring-2 outline-none focus:ring-blue-500" />
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Parent / Guardian Name
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={formData.parentName}
+                                            onChange={e => setFormData({ ...formData, parentName: e.target.value })}
+                                            placeholder="e.g. Sunil Bandara"
+                                            className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                                        />
                                     </div>
+
                                     <div>
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">Contact Number</label>
-                                        <input type="tel" value={formData.parentPhone} onChange={e => setFormData({ ...formData, parentPhone: e.target.value })} className="w-full border rounded-lg p-2.5 text-sm focus:ring-2 outline-none focus:ring-blue-500" />
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Contact Number (WhatsApp)
+                                        </label>
+                                        <input
+                                            type="tel"
+                                            value={formData.parentPhone}
+                                            onChange={e => setFormData({ ...formData, parentPhone: e.target.value })}
+                                            placeholder="e.g. 077 123 4567"
+                                            className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                                        />
                                     </div>
+
                                     <div className="col-span-1 md:col-span-2">
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">Email <span className="text-gray-400">(optional)</span></label>
-                                        <input type="email" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} className="w-full border rounded-lg p-2.5 text-sm focus:ring-2 outline-none focus:ring-blue-500" />
-                                    </div>
-                                    <div className="col-span-1 md:col-span-2">
-                                        <label className="block text-xs font-medium text-gray-700 mb-1">Home Address</label>
-                                        <textarea value={formData.address} onChange={e => setFormData({ ...formData, address: e.target.value })} className="w-full border rounded-lg p-2.5 text-sm focus:ring-2 outline-none focus:ring-blue-500" rows="2"></textarea>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                                            Home Address <span className="text-slate-400 font-normal lowercase">(optional)</span>
+                                        </label>
+                                        <textarea
+                                            value={formData.address}
+                                            onChange={e => setFormData({ ...formData, address: e.target.value })}
+                                            rows="2"
+                                            placeholder="Street, City"
+                                            className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                                        ></textarea>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                        <div className="bg-gray-50 p-4 shrink-0 flex justify-end space-x-3 border-t">
-                            <button type="button" onClick={() => setShowModal(false)} className="px-5 py-2 text-gray-600 bg-white border border-gray-300 hover:bg-gray-50 rounded-lg text-sm font-bold">Cancel</button>
-                            <button type="submit" form="studentForm" disabled={formData.assignedClasses.length === 0} className="px-5 py-2 bg-blue-600 disabled:bg-gray-300 text-white rounded-lg text-sm font-bold hover:bg-blue-700 shadow-sm">Save Student</button>
+
+                        {/* Modal Footer */}
+                        <div className="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50 px-6 py-4">
+                            <button
+                                type="button"
+                                onClick={() => setShowModal(false)}
+                                className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 transition"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                form="studentForm"
+                                disabled={formData.assignedClasses.length === 0}
+                                className="rounded-xl bg-blue-600 px-5 py-2 text-xs font-bold text-white shadow-sm hover:bg-blue-700 transition active:scale-95 disabled:opacity-50"
+                            >
+                                Register Student
+                            </button>
                         </div>
                     </div>
                 </div>
             )}
 
             {createdCredentials && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden">
-                        <div className="bg-blue-600 p-5 text-white">
-                            <h2 className="font-bold text-lg">Student Account Created</h2>
-                            <p className="text-sm text-blue-100 mt-1">Give these login details to the student.</p>
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-200">
+                        <div className="border-b border-slate-100 px-6 py-4">
+                            <h2 className="text-base font-bold text-slate-900">Student Account Created</h2>
+                            <p className="text-xs text-slate-500 mt-0.5">Please share these initial login credentials with the student.</p>
                         </div>
                         <div className="p-6 space-y-4">
-                            <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 space-y-3">
+                            <div className="rounded-xl border border-blue-100 bg-blue-50/70 p-4 space-y-3">
                                 <div>
-                                    <p className="text-xs font-medium uppercase tracking-wide text-gray-500">Username</p>
-                                    <p className="font-mono text-lg font-bold text-gray-900">{createdCredentials.username}</p>
+                                    <p className="text-xs font-bold uppercase tracking-wider text-blue-600">Student ID / Username</p>
+                                    <p className="font-mono text-base font-black text-slate-900">{createdCredentials.username}</p>
                                 </div>
                                 <div>
-                                    <p className="text-xs font-medium uppercase tracking-wide text-gray-500">Temporary Password</p>
-                                    <p className="font-mono text-lg font-bold text-gray-900">{createdCredentials.temporaryPassword}</p>
+                                    <p className="text-xs font-bold uppercase tracking-wider text-blue-600">Temporary Password</p>
+                                    <p className="font-mono text-base font-black text-slate-900">{createdCredentials.temporaryPassword}</p>
                                 </div>
                             </div>
-                            <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3">
-                                This password is shown only once. The student will be required to change it after the first login.
+                            <p className="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-xl p-3 leading-relaxed">
+                                ℹ️ The student will be prompted to change this temporary password upon first login.
                             </p>
                         </div>
-                        <div className="bg-gray-50 p-4 flex justify-end gap-3 border-t">
-                            <button type="button" onClick={copyCredentials} className="px-4 py-2 text-blue-700 bg-white border border-blue-300 hover:bg-blue-50 rounded-lg text-sm font-bold">
-                                {credentialsCopied ? 'Copied' : 'Copy Credentials'}
+                        <div className="flex justify-end gap-2.5 border-t border-slate-100 bg-slate-50 px-6 py-4">
+                            <button
+                                type="button"
+                                onClick={copyCredentials}
+                                className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 transition"
+                            >
+                                {credentialsCopied ? '✓ Copied' : 'Copy Credentials'}
                             </button>
-                            <button type="button" onClick={() => setCreatedCredentials(null)} className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-bold hover:bg-blue-700">
+                            <button
+                                type="button"
+                                onClick={() => setCreatedCredentials(null)}
+                                className="rounded-xl bg-blue-600 px-5 py-2 text-xs font-bold text-white hover:bg-blue-700 transition"
+                            >
                                 Done
                             </button>
                         </div>

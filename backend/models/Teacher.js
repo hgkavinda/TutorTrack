@@ -37,9 +37,9 @@ const TeacherSchema = new mongoose.Schema(
 );
 
 // Encrypt password using bcrypt
-TeacherSchema.pre('save', async function (next) {
+TeacherSchema.pre('save', async function () {
     if (!this.isModified('password')) {
-        next();
+        return;
     }
 
     const salt = await bcrypt.genSalt(10);

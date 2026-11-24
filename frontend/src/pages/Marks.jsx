@@ -322,55 +322,78 @@ const Marks = () => {
             )}
 
             {showCreate && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden">
-                        <div className="bg-blue-600 p-4 flex justify-between items-center text-white">
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-xl max-h-[90vh] flex flex-col overflow-hidden border border-slate-200">
+                        {/* Header */}
+                        <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
                             <div>
-                                <h2 className="font-bold text-lg">Create Exam</h2>
-                                <p className="text-xs text-blue-100">Exam type determines the rating weight.</p>
+                                <h2 className="text-base font-bold text-slate-900">Create New Exam</h2>
+                                <p className="text-xs text-slate-500 mt-0.5">Exam type determines the rating and progress weight.</p>
                             </div>
-                            <button onClick={() => setShowCreate(false)} className="text-2xl">×</button>
+                            <button
+                                onClick={() => setShowCreate(false)}
+                                className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition font-bold"
+                            >
+                                ✕
+                            </button>
                         </div>
-                        <form onSubmit={createExam} className="p-6 space-y-4">
-                            <div>
-                                <label className="block text-xs font-medium text-gray-600 mb-1">Exam Name</label>
-                                <input required value={examForm.name} onChange={(event) => setExamForm({ ...examForm, name: event.target.value })} placeholder="e.g. July Monthly Examination" className="w-full border rounded-lg p-2.5 text-sm" />
-                            </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {/* Scrollable Form Body */}
+                        <div className="overflow-y-auto p-6 flex-1">
+                            <form id="createExamForm" onSubmit={createExam} className="space-y-4">
                                 <div>
-                                    <label className="block text-xs font-medium text-gray-600 mb-1">Exam Type</label>
-                                    <select value={examForm.type} onChange={(event) => setExamForm({ ...examForm, type: event.target.value })} className="w-full border rounded-lg p-2.5 text-sm">
-                                        {EXAM_TYPES.map(([type, weight]) => <option key={type} value={type}>{type} — weight {weight}</option>)}
-                                    </select>
+                                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Exam Name</label>
+                                    <input required value={examForm.name} onChange={(event) => setExamForm({ ...examForm, name: event.target.value })} placeholder="e.g. July Monthly Examination" className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20" />
                                 </div>
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-600 mb-1">Grade</label>
-                                    <select value={examForm.grade} onChange={(event) => setExamForm({ ...examForm, grade: event.target.value })} className="w-full border rounded-lg p-2.5 text-sm">
-                                        {GRADES.map((grade) => <option key={grade} value={grade}>Grade {grade}</option>)}
-                                    </select>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Exam Type</label>
+                                        <select value={examForm.type} onChange={(event) => setExamForm({ ...examForm, type: event.target.value })} className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20 bg-white">
+                                            {EXAM_TYPES.map(([type, weight]) => <option key={type} value={type}>{type} — weight {weight}</option>)}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Grade</label>
+                                        <select value={examForm.grade} onChange={(event) => setExamForm({ ...examForm, grade: event.target.value })} className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20 bg-white">
+                                            {GRADES.map((grade) => <option key={grade} value={grade}>Grade {grade}</option>)}
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Subject</label>
+                                        <input required value={examForm.subject} onChange={(event) => setExamForm({ ...examForm, subject: event.target.value })} className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Exam Date</label>
+                                        <input type="date" required value={examForm.examDate} onChange={(event) => setExamForm({ ...examForm, examDate: event.target.value })} className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Total Marks</label>
+                                        <input type="number" min="1" required value={examForm.totalMarks} onChange={(event) => setExamForm({ ...examForm, totalMarks: event.target.value })} className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">Academic Year</label>
+                                        <input type="number" min="2000" max="2100" required value={examForm.academicYear} onChange={(event) => setExamForm({ ...examForm, academicYear: event.target.value })} className="w-full rounded-xl border border-slate-300 p-2.5 text-sm font-medium text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20" />
+                                    </div>
                                 </div>
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-600 mb-1">Subject</label>
-                                    <input required value={examForm.subject} onChange={(event) => setExamForm({ ...examForm, subject: event.target.value })} className="w-full border rounded-lg p-2.5 text-sm" />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-600 mb-1">Exam Date</label>
-                                    <input type="date" required value={examForm.examDate} onChange={(event) => setExamForm({ ...examForm, examDate: event.target.value })} className="w-full border rounded-lg p-2.5 text-sm" />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-600 mb-1">Total Marks</label>
-                                    <input type="number" min="1" required value={examForm.totalMarks} onChange={(event) => setExamForm({ ...examForm, totalMarks: event.target.value })} className="w-full border rounded-lg p-2.5 text-sm" />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-medium text-gray-600 mb-1">Academic Year</label>
-                                    <input type="number" min="2000" max="2100" required value={examForm.academicYear} onChange={(event) => setExamForm({ ...examForm, academicYear: event.target.value })} className="w-full border rounded-lg p-2.5 text-sm" />
-                                </div>
-                            </div>
-                            <div className="flex justify-end gap-3 pt-4 border-t">
-                                <button type="button" onClick={() => setShowCreate(false)} className="px-4 py-2 text-gray-600 border rounded-lg text-sm font-semibold">Cancel</button>
-                                <button disabled={saving} className="px-5 py-2 bg-blue-600 text-white rounded-lg text-sm font-bold disabled:bg-gray-300">Create Exam</button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
+                        {/* Footer */}
+                        <div className="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50 px-6 py-4">
+                            <button
+                                type="button"
+                                onClick={() => setShowCreate(false)}
+                                className="rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 transition"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                form="createExamForm"
+                                disabled={saving}
+                                className="rounded-xl bg-blue-600 px-5 py-2 text-xs font-bold text-white shadow-sm hover:bg-blue-700 transition active:scale-95 disabled:bg-slate-300"
+                            >
+                                Create Exam
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

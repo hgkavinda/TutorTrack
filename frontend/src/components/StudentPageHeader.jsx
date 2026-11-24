@@ -1,16 +1,16 @@
 const StudentPageHeader = ({ eyebrow, title, description, children }) => (
-    <header className="flex items-end justify-between gap-4 border-b border-white/10 pb-6 mb-2">
+    <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-slate-200/90 pb-4 mb-5">
         <div className="min-w-0">
             {eyebrow && (
-                <p className="page-eyebrow mb-2 flex items-center gap-2">
-                    <span className="h-px w-5 bg-cyan-400"></span>
+                <p className="text-xs font-extrabold uppercase tracking-widest text-blue-700 mb-1 flex items-center gap-1.5">
+                    <span className="h-1 w-4 rounded-full bg-blue-600"></span>
                     {eyebrow}
                 </p>
             )}
-            <h1 className="page-title mt-1 text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 drop-shadow-sm">{title}</h1>
-            {description && <p className="page-copy mt-2">{description}</p>}
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 leading-snug">{title}</h1>
+            {description && <p className="text-sm sm:text-base font-medium text-slate-600 mt-1">{description}</p>}
         </div>
-        {children && <div className="flex-none">{children}</div>}
+        {children && <div className="flex-none self-start sm:self-auto">{children}</div>}
     </header>
 );
 
