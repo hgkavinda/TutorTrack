@@ -29,6 +29,14 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 0 3px rgb(59 130 246 / 0.12) !important;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #f8fafc inset !important;
+  -webkit-text-fill-color: #0f172a !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 .app-card {
   border: 1px solid #e2e8f0;
   background: white;

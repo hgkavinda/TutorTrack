@@ -7,6 +7,7 @@ const Exam = require('../models/Exam');
 const Attendance = require('../models/Attendance');
 const Announcement = require('../models/Announcement');
 const Fee = require('../models/Fee');
+const Material = require('../models/Material');
 const ClassSession = require('../models/ClassSession');
 
 const getActiveEnrollments = (studentId) => Enrollment.find({
@@ -105,7 +106,7 @@ exports.getDashboard = asyncHandler(async (req, res) => {
         academicYear: student.academicYear,
     }).select('_id');
 
-    const [ratings, latestResults, attendance, announcements, feeInvoices] = await Promise.all([
+    const [ratings, latestResults, attendance, announcements, feeInvoices, materials] = await Promise.all([
         StudentRating.find({
             student: student._id,
             academicYear: student.academicYear,
@@ -133,6 +134,12 @@ exports.getDashboard = asyncHandler(async (req, res) => {
             student: student._id,
             billingMonth: { $regex: `^${student.academicYear}-` },
         }).sort('-billingMonth'),
+        Material.find({
+            assignedClass: { $in: classIds },
+        })
+            .populate('assignedClass', 'className')
+            .sort('-createdAt')
+            .limit(6),
     ]);
 
     res.status(200).json({
@@ -144,6 +151,7 @@ exports.getDashboard = asyncHandler(async (req, res) => {
             latestResults,
             attendance,
             announcements,
+            materials,
             fees: buildFeeSummary(feeInvoices),
         },
     });

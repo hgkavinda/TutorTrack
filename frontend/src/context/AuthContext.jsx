@@ -36,10 +36,12 @@ export const AuthProvider = ({ children }) => {
     }, [token, role]);
 
     const login = async (identifier, password, loginRole) => {
-        const endpoint = loginRole === 'student' ? '/auth/student/login' : '/auth/login';
-        const payload = loginRole === 'student'
-            ? { username: identifier, password }
-            : { email: identifier, password };
+        const cleanedIdentifier = String(identifier || '').trim();
+        const resolvedRole = loginRole || (cleanedIdentifier.includes('@') ? 'teacher' : 'student');
+        const endpoint = resolvedRole === 'student' ? '/auth/student/login' : '/auth/login';
+        const payload = resolvedRole === 'student'
+            ? { username: cleanedIdentifier.toUpperCase(), password }
+            : { email: cleanedIdentifier.toLowerCase(), password };
         const response = await api.post(endpoint, payload);
 
         setLoading(true);

@@ -232,6 +232,9 @@ exports.createStudent = asyncHandler(async (req, res) => {
             credentials: {
                 username: student.studentId,
                 temporaryPassword,
+                fullName: student.fullName,
+                phone: student.parentPhone || '',
+                isReset: false,
             },
         });
     } catch (error) {
@@ -332,7 +335,13 @@ exports.resetStudentPassword = asyncHandler(async (req, res) => {
 
     res.status(200).json({
         success: true,
-        credentials: { username: student.studentId, temporaryPassword },
+        credentials: {
+            username: student.studentId,
+            temporaryPassword,
+            fullName: student.fullName,
+            phone: student.parentPhone || '',
+            isReset: true,
+        },
     });
 });
 

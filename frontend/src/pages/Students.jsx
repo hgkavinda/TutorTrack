@@ -120,9 +120,29 @@ const Students = () => {
     const copyCredentials = async () => {
         if (!createdCredentials) return;
 
-        const text = `TutorTrack Student Login\nUsername: ${createdCredentials.username}\nTemporary Password: ${createdCredentials.temporaryPassword}`;
+        const text = `TutorTrack Student Login\nStudent ID: ${createdCredentials.username}\nTemporary Password: ${createdCredentials.temporaryPassword}`;
         await navigator.clipboard.writeText(text);
         setCredentialsCopied(true);
+    };
+
+    const getCredentialsWhatsAppUrl = () => {
+        if (!createdCredentials) return '#';
+        const rawDigits = String(createdCredentials.phone || '').replace(/\D/g, '');
+        const dummyPhones = ['1987654321', '1122334455', '1234567890'];
+        let waPhone = '';
+        if (rawDigits && !dummyPhones.includes(rawDigits)) {
+            if (rawDigits.startsWith('0') && rawDigits.length === 10) {
+                waPhone = `94${rawDigits.slice(1)}`;
+            } else if (rawDigits.length === 9 && rawDigits.startsWith('7')) {
+                waPhone = `94${rawDigits}`;
+            } else if (rawDigits.startsWith('94') && rawDigits.length === 11) {
+                waPhone = rawDigits;
+            }
+        }
+        const msg = `Maths By HG Kavinda - TutorTrack Student Login\n\nStudent ID: ${createdCredentials.username}\nTemporary Password: ${createdCredentials.temporaryPassword}\n\nඉහත තාවකාලික මුරපදය භාවිතා කර Sign In වී ඔබට කැමති නව මුරපදයක් සකසා ගන්න.`;
+        return waPhone
+            ? `https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`
+            : `https://wa.me/?text=${encodeURIComponent(msg)}`;
     };
 
     const handleDelete = async (id) => {
@@ -456,11 +476,15 @@ const Students = () => {
             )}
 
             {createdCredentials && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
                     <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-200">
                         <div className="border-b border-slate-100 px-6 py-4">
-                            <h2 className="text-base font-bold text-slate-900">Student Account Created</h2>
-                            <p className="text-xs text-slate-500 mt-0.5">Please share these initial login credentials with the student.</p>
+                            <h2 className="text-base font-bold text-slate-900">
+                                {createdCredentials.isReset ? 'Temporary Password Generated' : 'Student Account Created'}
+                            </h2>
+                            <p className="text-xs text-slate-500 mt-0.5">
+                                Share these login credentials with {createdCredentials.fullName || 'the student'}.
+                            </p>
                         </div>
                         <div className="p-6 space-y-4">
                             <div className="rounded-xl border border-blue-100 bg-blue-50/70 p-4 space-y-3">
@@ -474,10 +498,19 @@ const Students = () => {
                                 </div>
                             </div>
                             <p className="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-xl p-3 leading-relaxed">
-                                ℹ️ The student will be prompted to change this temporary password upon first login.
+                                ℹ️ ළමයා මෙම තාවකාලික මුරපදයෙන් පළමු වරට ඇතුළු වූ විගස නව මුරපදයක් සකසා ගැනීමට පද්ධතිය යොමු කරයි.
                             </p>
+                            <a
+                                href={getCredentialsWhatsAppUrl()}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 py-2.5 text-xs sm:text-sm font-extrabold text-white shadow-xs hover:bg-emerald-700 transition"
+                            >
+                                <span>💬</span>
+                                <span>WhatsApp මගින් ළමයාට යවන්න</span>
+                            </a>
                         </div>
-                        <div className="flex justify-end gap-2.5 border-t border-slate-100 bg-slate-50 px-6 py-4">
+                        <div className="flex justify-end gap-2.5 border-t border-slate-100 bg-slate-50 px-6 py-3.5">
                             <button
                                 type="button"
                                 onClick={copyCredentials}
@@ -504,6 +537,7 @@ const Students = () => {
                     onClose={() => setSelectedStudentId(null)}
                     onUpdated={fetchStudents}
                     onCredentials={(credentials) => {
+                        setSelectedStudentId(null);
                         setCreatedCredentials(credentials);
                         setCredentialsCopied(false);
                     }}

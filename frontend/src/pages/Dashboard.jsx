@@ -34,15 +34,10 @@ const Dashboard = () => {
     return (
         <div className="space-y-6">
             {/* Header */}
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-                <div>
-                    <p className="page-eyebrow">ගුරු මධ්‍යස්ථානය</p>
-                    <h1 className="page-title mt-1">සුබ දවසක්!</h1>
-                    <p className="page-copy mt-2">අද පන්ති සහ පාලන කටයුතු එකම තැනකින් කළමනාකරණය කරන්න.</p>
-                </div>
-                <p className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-500">
-                    TutorTrack · Teacher
-                </p>
+            <div>
+                <p className="page-eyebrow">ගුරු මධ්‍යස්ථානය</p>
+                <h1 className="page-title mt-1">සුබ දවසක්!</h1>
+                <p className="page-copy mt-2">අද පන්ති සහ පාලන කටයුතු එකම තැනකින් කළමනාකරණය කරන්න.</p>
             </div>
 
             {/* Quick Actions (Unified Brand Theme) */}

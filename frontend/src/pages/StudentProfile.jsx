@@ -289,7 +289,7 @@ const StudentProfile = () => {
                                 <button
                                     type="button"
                                     onClick={logout}
-                                    className="flex w-full items-center justify-between rounded-xl border border-rose-200 bg-rose-50/70 px-3.5 py-2.5 text-xs font-bold text-rose-700 transition hover:bg-rose-100"
+                                    className="flex w-full items-center justify-between rounded-xl border border-rose-200 bg-rose-50/70 px-3.5 py-2.5 text-xs font-bold text-rose-700 transition hover:bg-rose-100 lg:hidden"
                                 >
                                     <span className="flex items-center gap-2">
                                         <Icon name="logout" size={16} />
@@ -524,8 +524,8 @@ const StudentProfile = () => {
                         </form>
                     </div>
 
-                    {/* Session Box */}
-                    <div className="app-card p-5 flex items-center justify-between border-rose-100 bg-rose-50/40">
+                    {/* Session Box (Mobile/Tablet only - Desktop has header Logout) */}
+                    <div className="app-card p-5 flex items-center justify-between border-rose-100 bg-rose-50/40 lg:hidden">
                         <div>
                             <h4 className="text-sm font-extrabold text-slate-900">ගිණුමෙන් ඉවත් වීම (Sign Out)</h4>
                             <p className="text-xs text-slate-500 mt-0.5">මෙම උපකරණයෙන් (Device) ඔබගේ ගිණුමෙන් ආරක්ෂිතව ඉවත් වන්න.</p>

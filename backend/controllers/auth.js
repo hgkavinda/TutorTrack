@@ -166,3 +166,17 @@ exports.changeStudentPassword = asyncHandler(async (req, res) => {
 
     res.status(200).json({ success: true, message: 'Password changed successfully' });
 });
+
+// @desc    Get public teacher contact info for password reset help
+// @route   GET /api/auth/public-contact
+// @access  Public
+exports.getPublicContact = asyncHandler(async (req, res) => {
+    const teacher = await Teacher.findOne().select('name phoneNumber');
+    res.status(200).json({
+        success: true,
+        data: {
+            teacherName: teacher?.name || 'Sir HG Kavinda',
+            phoneNumber: teacher?.phoneNumber || '',
+        },
+    });
+});
