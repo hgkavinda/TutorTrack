@@ -7,10 +7,10 @@ const StudentPageHeader = ({ eyebrow, title, description, children }) => (
                     {eyebrow}
                 </p>
             )}
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 leading-snug">{title}</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold sm:font-extrabold tracking-[-0.01em] text-slate-900 leading-snug">{title}</h1>
             {description && <p className="text-sm sm:text-base font-medium text-slate-600 mt-1">{description}</p>}
         </div>
-        {children && <div className="flex-none self-start sm:self-auto">{children}</div>}
+        {children && <div className="w-full flex-none sm:w-auto">{children}</div>}
     </header>
 );
 

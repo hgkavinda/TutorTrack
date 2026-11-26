@@ -89,7 +89,7 @@ async function seedCompleteData() {
                 date: session.date,
                 status: 'Present',
                 markedBy: teacher._id,
-                note: 'On time via QR Scan'
+                note: ''
             });
             console.log('Attendance seeded: Present');
 

@@ -217,57 +217,21 @@ const StudentProfile = () => {
                                 </div>
                             </div>
 
-                            {/* QR Code / Attendance Scan Block */}
-                            <div className="relative mt-6 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-xs text-center">
-                                <p className="text-[11px] font-bold text-blue-200 uppercase tracking-wider">
-                                    Attendance Scan Code
-                                </p>
-                                {/* High-Contrast SVG QR Representation */}
-                                <div className="mx-auto my-3 flex h-28 w-28 items-center justify-center rounded-xl bg-white p-2 shadow-inner">
-                                    <svg viewBox="0 0 100 100" className="h-full w-full">
-                                        {/* Corner Markers */}
-                                        <rect x="5" y="5" width="28" height="28" fill="#0f172a" rx="4" />
-                                        <rect x="9" y="9" width="20" height="20" fill="#ffffff" rx="2" />
-                                        <rect x="13" y="13" width="12" height="12" fill="#0f172a" rx="1" />
-
-                                        <rect x="67" y="5" width="28" height="28" fill="#0f172a" rx="4" />
-                                        <rect x="71" y="9" width="20" height="20" fill="#ffffff" rx="2" />
-                                        <rect x="75" y="13" width="12" height="12" fill="#0f172a" rx="1" />
-
-                                        <rect x="5" y="67" width="28" height="28" fill="#0f172a" rx="4" />
-                                        <rect x="9" y="71" width="20" height="20" fill="#ffffff" rx="2" />
-                                        <rect x="13" y="75" width="12" height="12" fill="#0f172a" rx="1" />
-
-                                        {/* Data Grid Mock Pattern */}
-                                        <rect x="38" y="10" width="8" height="8" fill="#0f172a" />
-                                        <rect x="50" y="14" width="10" height="6" fill="#0f172a" />
-                                        <rect x="38" y="24" width="6" height="12" fill="#0f172a" />
-                                        <rect x="48" y="26" width="12" height="8" fill="#0f172a" />
-
-                                        <rect x="10" y="38" width="14" height="8" fill="#0f172a" />
-                                        <rect x="28" y="40" width="8" height="12" fill="#0f172a" />
-                                        <rect x="14" y="50" width="10" height="10" fill="#0f172a" />
-
-                                        {/* Center Core */}
-                                        <rect x="42" y="42" width="16" height="16" fill="#2563eb" rx="2" />
-                                        <rect x="46" y="46" width="8" height="8" fill="#ffffff" rx="1" />
-
-                                        <rect x="66" y="38" width="10" height="8" fill="#0f172a" />
-                                        <rect x="80" y="42" width="12" height="10" fill="#0f172a" />
-                                        <rect x="68" y="52" width="8" height="10" fill="#0f172a" />
-
-                                        <rect x="38" y="66" width="10" height="8" fill="#0f172a" />
-                                        <rect x="52" y="70" width="8" height="12" fill="#0f172a" />
-                                        <rect x="40" y="78" width="14" height="12" fill="#0f172a" />
-
-                                        <rect x="68" y="68" width="8" height="10" fill="#0f172a" />
-                                        <rect x="80" y="72" width="10" height="8" fill="#0f172a" />
-                                        <rect x="74" y="84" width="14" height="8" fill="#0f172a" />
-                                    </svg>
+                            {/* Official Enrollment Verification Strip */}
+                            <div className="relative mt-6 rounded-2xl border border-white/10 bg-white/5 p-3.5 backdrop-blur-xs space-y-2">
+                                <div className="flex items-center justify-between text-xs">
+                                    <span className="font-medium text-blue-200/80">ලියාපදිංචි පන්තිය · Class</span>
+                                    <span className="font-bold text-white truncate max-w-[160px]">
+                                        {classes?.[0]?.className || `Grade ${student.grade} Mathematics`}
+                                    </span>
                                 </div>
-                                <p className="text-[10px] text-slate-300">
-                                    පැමිණීම සටහන් කිරීමට මෙම QR code එක පන්තියේදී පෙන්වන්න.
-                                </p>
+                                <div className="flex items-center justify-between border-t border-white/10 pt-2 text-xs">
+                                    <span className="font-medium text-blue-200/80">තත්ත්වය · Status</span>
+                                    <span className="inline-flex items-center gap-1.5 font-bold text-emerald-300">
+                                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+                                        Active Registered Student
+                                    </span>
+                                </div>
                             </div>
                         </div>
 

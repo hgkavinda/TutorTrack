@@ -109,11 +109,11 @@ const StudentHome = () => {
                     <div>
                         <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-3">
                             <div>
-                                <h2 className="text-base sm:text-lg font-extrabold text-slate-900">ඔබේ ප්‍රගතිය</h2>
-                                <p className="text-xs font-bold text-blue-700">Performance & Rating</p>
+                                <h2 className="text-base sm:text-lg font-bold leading-snug text-slate-900">ඔබේ ප්‍රගතිය</h2>
+                                <p className="text-xs font-semibold text-blue-700">Performance & Rating</p>
                             </div>
                             {primaryRating && gradeMeta && (
-                                <span className={`rounded-full border px-3 py-1 text-xs font-extrabold ${gradeMeta.pillClass}`}>
+                                <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${gradeMeta.pillClass}`}>
                                     {gradeMeta.label}
                                 </span>
                             )}
@@ -165,63 +165,70 @@ const StudentHome = () => {
                                     </div>
                                 </div>
 
-                                {/* 3 Clear Student-Friendly Summary Tiles */}
-                                <div className="mt-4 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
-                                    <div className="rounded-xl bg-slate-50 border border-slate-200 p-3">
-                                        <p className="text-[11px] font-bold text-slate-500">ලකුණු සාමාන්‍යය</p>
-                                        <p className="mt-0.5 text-lg font-black text-slate-900">{avgScore}%</p>
-                                        <p className="text-[11px] font-medium text-slate-500">මෑත විභාග ලකුණු</p>
+                                {/* 3 Perfectly Aligned Side-by-Side Tiles (Mobile & Desktop) */}
+                                <div className="mt-4 grid grid-cols-3 gap-2 sm:gap-2.5">
+                                    <div className="rounded-xl bg-slate-50 border border-slate-200 px-2 py-3 sm:p-3 text-center">
+                                        <p className="text-lg sm:text-xl font-black text-slate-900 leading-none">{avgScore}%</p>
+                                        <p className="mt-1.5 text-[11px] font-bold text-slate-700 leading-tight">සාමාන්‍යය</p>
+                                        <p className="mt-0.5 text-[10px] font-medium text-slate-500 leading-tight">Avg Marks</p>
                                     </div>
 
-                                    <div className="rounded-xl bg-slate-50 border border-slate-200 p-3">
-                                        <p className="text-[11px] font-bold text-slate-500">පන්තියේ ස්ථානය</p>
-                                        {latestResult?.gradeRank && latestResult?.cohortSize ? (
-                                            <>
-                                                <p className="mt-0.5 text-lg font-black text-slate-900">
-                                                    {latestResult.gradeRank} / {latestResult.cohortSize}
-                                                </p>
-                                                <p className="text-[11px] font-medium text-slate-500">
-                                                    ළමුන් {latestResult.cohortSize}න් {latestResult.gradeRank} වැනියා
-                                                </p>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <p className="mt-0.5 text-lg font-black text-slate-900">—</p>
-                                                <p className="text-[11px] font-medium text-slate-500">ඊළඟ විභාගයෙන් පසු</p>
-                                            </>
-                                        )}
+                                    <div className="rounded-xl bg-slate-50 border border-slate-200 px-2 py-3 sm:p-3 text-center">
+                                        <p className="text-lg sm:text-xl font-black text-slate-900 leading-none">
+                                            {latestResult?.gradeRank && latestResult?.cohortSize
+                                                ? `${latestResult.gradeRank}/${latestResult.cohortSize}`
+                                                : '—'}
+                                        </p>
+                                        <p className="mt-1.5 text-[11px] font-bold text-slate-700 leading-tight">ස්ථානය</p>
+                                        <p className="mt-0.5 text-[10px] font-medium text-slate-500 leading-tight">
+                                            {latestResult?.gradeRank && latestResult?.cohortSize
+                                                ? `ළමුන් ${latestResult.cohortSize}න් ${latestResult.gradeRank}`
+                                                : 'Class Rank'}
+                                        </p>
                                     </div>
 
                                     <div
-                                        className={`rounded-xl border p-3 ${
+                                        className={`rounded-xl border px-2 py-3 sm:p-3 text-center ${
                                             ratingDiff > 0
-                                                ? 'bg-emerald-50/70 border-emerald-200'
+                                                ? 'bg-emerald-50/80 border-emerald-200'
                                                 : ratingDiff < 0
-                                                ? 'bg-rose-50/70 border-rose-200'
+                                                ? 'bg-rose-50/80 border-rose-200'
                                                 : 'bg-slate-50 border-slate-200'
                                         }`}
                                     >
-                                        <p className="text-[11px] font-bold text-slate-500">කලින් විභාගයට වඩා</p>
-                                        {ratingDiff > 0 ? (
-                                            <>
-                                                <p className="mt-0.5 text-base font-black text-emerald-800">
-                                                    ▲ ලකුණු {ratingDiff}ක් වැඩිවී ඇත
-                                                </p>
-                                                <p className="text-[11px] font-semibold text-emerald-700">ප්‍රගතිය ඉහළට</p>
-                                            </>
-                                        ) : ratingDiff < 0 ? (
-                                            <>
-                                                <p className="mt-0.5 text-base font-black text-rose-800">
-                                                    ▼ ලකුණු {Math.abs(ratingDiff)}ක් අඩුවී ඇත
-                                                </p>
-                                                <p className="text-[11px] font-semibold text-rose-700">තව උත්සාහ කරමු</p>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <p className="mt-0.5 text-base font-black text-slate-800">ස්ථාවරයි</p>
-                                                <p className="text-[11px] font-medium text-slate-500">එකම මට්ටමක පවතී</p>
-                                            </>
-                                        )}
+                                        <p
+                                            className={`text-lg sm:text-xl font-black leading-none ${
+                                                ratingDiff > 0
+                                                    ? 'text-emerald-700'
+                                                    : ratingDiff < 0
+                                                    ? 'text-rose-700'
+                                                    : 'text-slate-800'
+                                            }`}
+                                        >
+                                            {ratingDiff > 0 ? `+${ratingDiff}` : ratingDiff < 0 ? `${ratingDiff}` : '0'}
+                                        </p>
+                                        <p
+                                            className={`mt-1.5 text-[11px] font-bold leading-tight ${
+                                                ratingDiff > 0
+                                                    ? 'text-emerald-800'
+                                                    : ratingDiff < 0
+                                                    ? 'text-rose-800'
+                                                    : 'text-slate-700'
+                                            }`}
+                                        >
+                                            {ratingDiff > 0 ? 'වැඩිවී ඇත ▲' : ratingDiff < 0 ? 'අඩුවී ඇත ▼' : 'ස්ථාවරයි'}
+                                        </p>
+                                        <p
+                                            className={`mt-0.5 text-[10px] font-medium leading-tight ${
+                                                ratingDiff > 0
+                                                    ? 'text-emerald-700/80'
+                                                    : ratingDiff < 0
+                                                    ? 'text-rose-700/80'
+                                                    : 'text-slate-500'
+                                            }`}
+                                        >
+                                            පසුගිය විභාගයට
+                                        </p>
                                     </div>
                                 </div>
                             </>
@@ -249,8 +256,8 @@ const StudentHome = () => {
                 <section className="app-card p-5 sm:p-6 flex flex-col justify-between">
                     <div>
                         <div className="border-b border-slate-100 pb-3">
-                            <h2 className="text-base sm:text-lg font-extrabold text-slate-900">පැමිණීම</h2>
-                            <p className="text-xs font-bold text-blue-700">Attendance Summary</p>
+                            <h2 className="text-base sm:text-lg font-bold leading-snug text-slate-900">පැමිණීම</h2>
+                            <p className="text-xs font-semibold text-blue-700">Attendance Summary</p>
                         </div>
                         <div className="mt-4 flex items-baseline justify-between">
                             <p className="text-4xl sm:text-5xl font-black text-slate-900">{data.attendance.attendanceRate}%</p>
@@ -259,11 +266,11 @@ const StudentHome = () => {
                         <div className="mt-4 grid grid-cols-2 gap-2.5 text-center">
                             <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-3">
                                 <p className="text-xl sm:text-2xl font-black text-emerald-800">{data.attendance.counts.Present}</p>
-                                <p className="text-xs font-bold text-emerald-700 mt-0.5">Present (පැමිණි)</p>
+                                <p className="text-xs font-semibold text-emerald-700 mt-0.5">Present (පැමිණි)</p>
                             </div>
                             <div className="rounded-xl bg-rose-50 border border-rose-200 p-3">
                                 <p className="text-xl sm:text-2xl font-black text-rose-800">{data.attendance.counts.Absent}</p>
-                                <p className="text-xs font-bold text-rose-700 mt-0.5">Absent (නොපැමිණි)</p>
+                                <p className="text-xs font-semibold text-rose-700 mt-0.5">Absent (නොපැමිණි)</p>
                             </div>
                         </div>
                     </div>
@@ -279,11 +286,11 @@ const StudentHome = () => {
                 <section className="app-card p-5 sm:p-6 flex flex-col justify-between">
                     <div>
                         <div className="border-b border-slate-100 pb-3">
-                            <h2 className="text-base sm:text-lg font-extrabold text-slate-900">පන්ති ගාස්තු</h2>
-                            <p className="text-xs font-bold text-blue-700">Fees Status</p>
+                            <h2 className="text-base sm:text-lg font-bold leading-snug text-slate-900">පන්ති ගාස්තු</h2>
+                            <p className="text-xs font-semibold text-blue-700">Fees Status</p>
                         </div>
                         <div className="mt-4">
-                            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">ගෙවීමට ඇති මුදල (Due):</p>
+                            <p className="text-xs font-semibold text-slate-500">ගෙවීමට ඇති මුදල (Due):</p>
                             <p
                                 className={`mt-0.5 text-3xl sm:text-4xl font-black ${
                                     data.fees.outstanding > 0 ? 'text-rose-600' : 'text-emerald-600'
@@ -312,8 +319,8 @@ const StudentHome = () => {
                 <section className="app-card p-5 sm:p-6">
                     <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                         <div>
-                            <h2 className="text-base sm:text-lg font-extrabold text-slate-900">නවතම ප්‍රතිඵලය</h2>
-                            <p className="text-xs font-bold text-blue-700">Latest Examination Result</p>
+                            <h2 className="text-base sm:text-lg font-bold leading-snug text-slate-900">නවතම ප්‍රතිඵලය</h2>
+                            <p className="text-xs font-semibold text-blue-700">Latest Examination Result</p>
                         </div>
                         <Link to="/student/results" className="text-sm font-bold text-blue-600 hover:text-blue-800">
                             All Results →
@@ -361,8 +368,8 @@ const StudentHome = () => {
                 {/* 5. My Classes & Schedule */}
                 <section className="app-card p-5 sm:p-6">
                     <div className="border-b border-slate-100 pb-3">
-                        <h2 className="text-base sm:text-lg font-extrabold text-slate-900">මගේ පන්ති සහ කාලසටහන</h2>
-                        <p className="text-xs font-bold text-blue-700">Enrolled Batches & Schedule</p>
+                        <h2 className="text-base sm:text-lg font-bold leading-snug text-slate-900">මගේ පන්ති සහ කාලසටහන</h2>
+                        <p className="text-xs font-semibold text-blue-700">Enrolled Batches & Schedule</p>
                     </div>
                     <div className="mt-4 space-y-3">
                         {data.classes.length ? (
@@ -398,8 +405,8 @@ const StudentHome = () => {
             <section className="app-card p-5 sm:p-6">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                     <div>
-                        <h2 className="text-base sm:text-lg font-extrabold text-slate-900">පාඩම් නිබන්ධන</h2>
-                        <p className="text-xs font-bold text-blue-700">Study Materials & Tutes</p>
+                        <h2 className="text-base sm:text-lg font-bold leading-snug text-slate-900">පාඩම් නිබන්ධන</h2>
+                        <p className="text-xs font-semibold text-blue-700">Study Materials & Tutes</p>
                     </div>
                     {materials.length > 0 && (
                         <span className="rounded-full bg-blue-50 border border-blue-200 px-2.5 py-0.5 text-xs font-extrabold text-blue-700">

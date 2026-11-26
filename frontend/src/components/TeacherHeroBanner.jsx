@@ -18,15 +18,17 @@ const TeacherHeroBanner = () => {
                 {/* Teacher Details */}
                 <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                        <span className="inline-flex items-center rounded-full bg-white/20 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-blue-100">
-                            ඔබේ ගුරුතුමා · Your Teacher
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-2.5 py-0.5 text-[11px] text-blue-100">
+                            <span className="font-semibold">ඔබේ ගුරුතුමා</span>
+                            <span className="opacity-70">·</span>
+                            <span className="font-bold uppercase tracking-wider">Your Teacher</span>
                         </span>
                     </div>
 
                     <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-white leading-tight truncate">
                         HG Kavinda
                     </h2>
-                    <p className="text-sm sm:text-base font-bold text-blue-200 mt-0.5">
+                    <p className="text-sm sm:text-base font-semibold text-blue-200 mt-0.5 leading-snug">
                         ගණිතය · Mathematics
                     </p>
 
@@ -34,7 +36,7 @@ const TeacherHeroBanner = () => {
                         <span className="rounded-lg bg-white/20 border border-white/25 px-2.5 py-0.5 text-xs font-bold text-white shadow-xs">
                             Grade 6 – 11
                         </span>
-                        <span className="text-xs font-semibold text-blue-100 hidden sm:inline">
+                        <span className="text-xs font-medium text-blue-100 hidden sm:inline">
                             Smart ලෙස ඉගෙන ගන්න · Learn Smarter
                         </span>
                     </div>

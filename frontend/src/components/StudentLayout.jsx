@@ -21,12 +21,12 @@ const StudentLayout = () => {
     return (
         <div className="student-background min-h-screen text-slate-900 bg-[#f6f8fc]">
             <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 text-slate-800 shadow-xs backdrop-blur-md">
-                <div className="mx-auto flex h-[68px] max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-                    <NavLink to="/student" className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                <div className="mx-auto flex h-[68px] max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+                    <NavLink to="/student" className="flex items-center gap-2.5 sm:gap-3 shrink-0">
                         <BrandLogo size="md" />
-                        <div className="min-w-0">
-                            <p className="truncate text-sm sm:text-lg font-extrabold tracking-tight text-slate-900">Maths By HG Kavinda</p>
-                        </div>
+                        <p className="whitespace-nowrap text-sm sm:text-base xl:text-lg font-extrabold tracking-tight text-slate-900">
+                            Maths By HG Kavinda
+                        </p>
                     </NavLink>
                     <nav className="hidden items-center gap-1 lg:flex">
                         {desktopLinks.map((link) => (
@@ -35,14 +35,14 @@ const StudentLayout = () => {
                                 to={link.path}
                                 end={link.end}
                                 className={({ isActive }) =>
-                                    `flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-bold transition ${
+                                    `flex items-center gap-1.5 whitespace-nowrap rounded-xl px-2.5 xl:px-3.5 py-2 text-[13px] font-semibold transition ${
                                         isActive
                                             ? 'bg-blue-50 text-blue-700 border border-blue-200/80 shadow-xs'
                                             : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
                                     }`
                                 }
                             >
-                                <Icon name={link.icon} size={16} />
+                                <Icon name={link.icon} size={15} />
                                 {link.label}
                             </NavLink>
                         ))}
@@ -51,7 +51,7 @@ const StudentLayout = () => {
                         <NavLink
                             to="/student/dalisa"
                             className={({ isActive }) =>
-                                `flex items-center gap-1.5 rounded-xl border px-2.5 py-2 text-xs font-extrabold transition shadow-2xs lg:hidden ${
+                                `flex items-center gap-1.5 whitespace-nowrap rounded-xl border px-2.5 py-2 text-xs font-bold transition shadow-2xs lg:hidden ${
                                     isActive
                                         ? 'border-blue-600 bg-blue-600 text-white'
                                         : 'border-blue-200 bg-blue-50/80 text-blue-700 hover:bg-blue-100'
@@ -65,21 +65,21 @@ const StudentLayout = () => {
                         <NavLink
                             to="/student/profile"
                             className={({ isActive }) =>
-                                `hidden items-center gap-2 rounded-xl border px-3 py-1.5 text-xs font-bold transition shadow-xs lg:flex ${
+                                `hidden items-center gap-2 rounded-xl border px-2.5 xl:px-3 py-1.5 text-xs font-bold transition shadow-xs lg:flex ${
                                     isActive
                                         ? 'bg-blue-50 text-blue-700 border-blue-200'
                                         : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
                                 }`
                             }
                         >
-                            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-blue-600 text-[11px] font-black text-white">
+                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-blue-600 text-[11px] font-extrabold text-white">
                                 {user?.fullName?.charAt(0) || 'S'}
                             </span>
-                            <span className="max-w-[110px] truncate">{user?.fullName || 'Profile'}</span>
+                            <span className="max-w-[100px] xl:max-w-[120px] truncate">{user?.fullName || 'Profile'}</span>
                         </NavLink>
                         <button
                             onClick={logout}
-                            className="hidden items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-700 shadow-xs transition hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 lg:flex"
+                            className="hidden items-center gap-1.5 whitespace-nowrap rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-700 shadow-xs transition hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 lg:flex"
                         >
                             <Icon name="logout" size={15} />
                             Logout
@@ -87,7 +87,7 @@ const StudentLayout = () => {
                     </div>
                 </div>
             </header>
-            <main className="mx-auto max-w-6xl p-4 pb-28 sm:p-6 lg:p-8">
+            <main className="mx-auto max-w-7xl p-4 pb-28 sm:p-6 lg:p-8">
                 <Outlet />
             </main>
             <nav className="safe-bottom fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-slate-200 bg-white/95 shadow-[0_-4px_20px_rgba(15,23,42,0.06)] backdrop-blur-lg lg:hidden">

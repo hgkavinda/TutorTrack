@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: 'Plus Jakarta Sans', 'Noto Sans Sinhala', sans-serif;
+}
+
 :root {
   --color-primary: #2563eb;
   --color-primary-dark: #1d4ed8;
@@ -9,9 +13,11 @@
 
 body {
   margin: 0;
-  font-family: 'Plus Jakarta Sans', 'Inter', 'Noto Sans Sinhala', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Plus Jakarta Sans', 'Noto Sans Sinhala', sans-serif;
   background-color: var(--color-bg-light);
   color: var(--color-text-main);
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -44,9 +50,9 @@ input:-webkit-autofill:focus {
   box-shadow: 0 3px 14px rgb(15 23 42 / 0.035);
 }
 
-.page-eyebrow { color: #2563eb; font-size: .72rem; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
-.page-title { color: #172033; font-size: clamp(1.5rem, 2vw, 2rem); font-weight: 800; letter-spacing: -.035em; line-height: 1.15; }
-.page-copy { color: #64748b; font-size: .9rem; line-height: 1.5; }
+.page-eyebrow { color: #2563eb; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.page-title { color: #172033; font-size: clamp(1.5rem, 2vw, 2rem); font-weight: 800; letter-spacing: -.015em; line-height: 1.3; }
+.page-copy { color: #64748b; font-size: .9rem; line-height: 1.55; }
 
 .student-page-header {
   display: flex;
@@ -59,13 +65,14 @@ input:-webkit-autofill:focus {
 
 .student-background {
   background-color: #f6f8fc;
-  font-family: 'Plus Jakarta Sans', 'Segoe UI', 'Noto Sans Sinhala', -apple-system, sans-serif;
+  font-family: 'Plus Jakarta Sans', 'Noto Sans Sinhala', sans-serif;
+  font-synthesis-weight: none;
   color: #172033;
 }
 
-.student-background .page-eyebrow { color: #2563eb; font-weight: 800; letter-spacing: 0.12em; }
-.student-background .page-title { color: #0f172a; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800; letter-spacing: -.03em; }
-.student-background .page-copy { color: #64748b; font-size: 0.9rem; }
+.student-background .page-eyebrow { color: #2563eb; font-weight: 700; letter-spacing: 0.12em; }
+.student-background .page-title { color: #0f172a; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800; letter-spacing: -.015em; line-height: 1.3; }
+.student-background .page-copy { color: #64748b; font-size: 0.9rem; line-height: 1.55; }
 
 .student-background .app-card {
   border: 1px solid #e2e8f0;
